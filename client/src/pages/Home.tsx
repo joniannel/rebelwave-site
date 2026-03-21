@@ -1,73 +1,48 @@
 /* =============================================================================
-   REBELWAVE HOME PAGE — Dark Kinetic Wave Design
-   Sections: Nav, Hero, Client Logos, About/AI, How It Works, VSL, 
-             Case Studies, Testimonials, Booking/Lead Gen, Footer
+   REBELWAVE HOME PAGE v2 — Clean Professional Design
+   Inspired by: heathmedia.co.uk
+   Design: Dark navy hero → white content sections → dark footer
+   Typography: Montserrat headings, DM Sans body
+   Tone: Professional, results-driven, relatable — not aggressive
    ============================================================================= */
 
 import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
-import { ArrowRight, ChevronDown, Play, Star, Menu, X, Zap, Target, BarChart3, Users } from "lucide-react";
+import { ArrowRight, Play, Star, Menu, X, CheckCircle, ChevronRight } from "lucide-react";
 
 // ── Asset URLs ──────────────────────────────────────────────────────────────
-const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rebelwave-hero-bg-NJfEugPTNVFqkDyxLd8LSo.webp";
-const AI_VISUAL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rebelwave-ai-visual-AdmiSpUdaHa4KaJtx2jGtk.webp";
-const RESULTS_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rebelwave-results-bg-VyfV7fNzZ27WuYogZwUxiZ.webp";
-const BOOKING_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rebelwave-booking-bg-JZK5vcEeAHWod7qtbMehgU.webp";
+const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rw-hero-v2-ddMKUT9thZECwdNUJxcWWL.webp";
+const ABOUT_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rw-about-v2-LJSab7qF4jpnrCWQZwTQYb.webp";
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rebelwave-logo_61d3bb46.webp";
 
 // ── Scroll reveal hook ───────────────────────────────────────────────────────
 function useReveal() {
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.12 }
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+      { threshold: 0.1 }
     );
     document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 }
 
-// ── Counter animation hook ───────────────────────────────────────────────────
-function useCounter(target: number, duration = 2000, start = false) {
+// ── Counter animation ────────────────────────────────────────────────────────
+function useCounter(target: number, duration = 1800, start = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!start) return;
     let startTime: number | null = null;
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      setCount(Math.floor(progress * target));
-      if (progress < 1) requestAnimationFrame(step);
+    const step = (ts: number) => {
+      if (!startTime) startTime = ts;
+      const p = Math.min((ts - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      setCount(Math.floor(ease * target));
+      if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
   }, [target, duration, start]);
   return count;
-}
-
-// ── Heartbeat SVG ────────────────────────────────────────────────────────────
-function HeartbeatLine({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 400 60" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M0 30 L60 30 L80 10 L100 50 L120 5 L140 55 L160 30 L220 30 L240 15 L260 45 L280 30 L400 30"
-        stroke="#D4B84A"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        style={{
-          strokeDasharray: 1000,
-          strokeDashoffset: 1000,
-          animation: "heartbeat-draw 2s ease forwards",
-        }}
-      />
-    </svg>
-  );
 }
 
 // ── Navigation ───────────────────────────────────────────────────────────────
@@ -76,89 +51,72 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const navLinks = [
-    { label: "Who We Are", href: "#about" },
     { label: "What We Do", href: "#services" },
     { label: "Results", href: "#results" },
+    { label: "About", href: "#about" },
     { label: "Testimonials", href: "#testimonials" },
   ];
 
+  const navStyle: React.CSSProperties = {
+    background: scrolled ? "rgba(13,27,42,0.97)" : "transparent",
+    backdropFilter: scrolled ? "blur(16px)" : "none",
+    borderBottom: scrolled ? "1px solid rgba(201,168,76,0.12)" : "none",
+  };
+
   return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{
-        background: scrolled ? "rgba(8,12,20,0.95)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? "1px solid rgba(212,184,74,0.15)" : "none",
-      }}
-    >
-      <div className="container flex items-center justify-between py-4">
+    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-400" style={navStyle}>
+      <div className="container flex items-center justify-between py-5">
         <a href="#" className="flex items-center">
-          <img src={LOGO_URL} alt="RebelWave" className="h-10 w-auto" />
+          <img src={LOGO_URL} alt="RebelWave" className="h-9 w-auto" />
         </a>
 
-        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-sm font-medium tracking-widest uppercase transition-colors duration-200"
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                color: "rgba(255,255,255,0.7)",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#D4B84A")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
+              className="text-sm font-medium transition-colors duration-200"
+              style={{ fontFamily: "'Montserrat', sans-serif", color: "rgba(255,255,255,0.65)", letterSpacing: "0.02em" }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.65)")}
             >
               {link.label}
             </a>
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-4">
-          <a href="#book" className="btn-gold text-sm">
-            <span>Book a Call</span>
+        <div className="hidden md:flex items-center gap-3">
+          <a href="#book" className="btn-gold text-sm py-2.5 px-5">
+            Book a Free Call
           </a>
         </div>
 
-        {/* Mobile menu button */}
-        <button
-          className="md:hidden text-white"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        <button className="md:hidden" style={{ color: "white" }} onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
-        <div
-          className="md:hidden px-6 pb-6 pt-2"
-          style={{ background: "rgba(8,12,20,0.98)" }}
-        >
+        <div className="md:hidden px-6 pb-6" style={{ background: "rgba(13,27,42,0.99)" }}>
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="block py-3 text-sm font-medium tracking-widest uppercase border-b"
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                color: "rgba(255,255,255,0.7)",
-                borderColor: "rgba(255,255,255,0.06)",
-              }}
+              className="block py-3.5 text-sm font-medium border-b"
+              style={{ fontFamily: "'Montserrat', sans-serif", color: "rgba(255,255,255,0.65)", borderColor: "rgba(255,255,255,0.06)" }}
               onClick={() => setMenuOpen(false)}
             >
               {link.label}
             </a>
           ))}
-          <a href="#book" className="btn-gold mt-4 block text-center text-sm">
-            <span>Book a Call</span>
+          <a href="#book" className="btn-gold mt-5 w-full text-center text-sm py-3">
+            Book a Free Call
           </a>
         </div>
       )}
@@ -169,147 +127,89 @@ function Navbar() {
 // ── Hero Section ─────────────────────────────────────────────────────────────
 function HeroSection() {
   return (
-    <section
-      className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: "#080C14" }}
-    >
-      {/* Background image */}
+    <section className="relative min-h-screen flex items-center" style={{ background: "#0D1B2A" }}>
       <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: `url(${HERO_BG})`,
-          opacity: 0.45,
-        }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${HERO_BG})`, opacity: 0.5 }}
       />
-      {/* Gradient overlay */}
       <div
         className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(8,12,20,0.85) 0%, rgba(25,29,40,0.6) 50%, rgba(8,12,20,0.9) 100%)",
-        }}
+        style={{ background: "linear-gradient(to right, rgba(13,27,42,0.95) 50%, rgba(13,27,42,0.5) 100%)" }}
       />
 
-      {/* Content */}
-      <div className="container relative z-10 pt-24 pb-16">
-        <div className="max-w-3xl">
-          <div className="section-label mb-6 flex items-center gap-3">
+      <div className="container relative z-10 pt-28 pb-20">
+        <div className="max-w-2xl">
+          {/* AI badge — above the fold */}
+          <div
+            className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 animate-fade-in-up"
+            style={{
+              background: "rgba(201,168,76,0.12)",
+              border: "1px solid rgba(201,168,76,0.3)",
+              borderRadius: "2px",
+            }}
+          >
             <span
-              className="inline-block w-8 h-px"
-              style={{ background: "#D4B84A" }}
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: "#C9A84C" }}
             />
-            Montreal's AI-Powered Growth Agency
+            <span
+              className="text-xs font-semibold tracking-widest uppercase"
+              style={{ fontFamily: "'Montserrat', sans-serif", color: "#C9A84C" }}
+            >
+              AI-Powered Customer Acquisition
+            </span>
           </div>
 
           <h1
-            className="text-5xl md:text-7xl font-black leading-none mb-6"
-            style={{
-              fontFamily: "'Syne', sans-serif",
-              color: "#FFFFFF",
-              letterSpacing: "-0.02em",
-            }}
+            className="text-4xl md:text-6xl font-bold leading-tight mb-6 animate-fade-in-up-delay-1"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF", letterSpacing: "-0.01em" }}
           >
-            We Don't Just
+            Stop Guessing.
             <br />
-            Run Ads.
+            Start Acquiring
             <br />
-            <span style={{ color: "#D4B84A" }}>We Build Machines</span>
-            <br />
-            That Print Leads.
+            <span style={{ color: "#C9A84C" }}>Qualified Leads.</span>
           </h1>
 
           <p
-            className="text-lg md:text-xl mb-10 max-w-xl"
-            style={{ color: "rgba(255,255,255,0.65)", lineHeight: 1.7 }}
+            className="text-lg mb-10 animate-fade-in-up-delay-2"
+            style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8, maxWidth: "520px" }}
           >
-            RebelWave is a full-service digital marketing agency that leverages AI to
-            accelerate customer acquisition for service-based businesses. We handle
-            everything — ads, creatives, funnels, and follow-up.
+            RebelWave is a full-service digital marketing agency that uses AI to help
+            service-based businesses acquire more customers — faster, and at a lower cost.
+            We handle everything from ad creation to lead pipeline to sales process.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#book" className="btn-gold inline-flex items-center gap-2">
-              <span>Book a Strategy Call</span>
-              <ArrowRight size={16} />
+          <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up-delay-3">
+            <a href="#book" className="btn-gold">
+              <span>Book a Free Strategy Call</span>
+              <ArrowRight size={15} />
             </a>
-            <a href="#vsl" className="btn-outline-gold inline-flex items-center gap-2">
-              <Play size={14} />
-              <span>Watch Our Story</span>
+            <a href="#vsl" className="btn-outline-white">
+              <Play size={13} />
+              <span>See How It Works</span>
             </a>
           </div>
 
-          {/* Heartbeat line */}
-          <div className="mt-16">
-            <HeartbeatLine className="w-full max-w-sm opacity-70" />
+          {/* Quick trust signals */}
+          <div className="flex flex-wrap gap-6 mt-12 animate-fade-in-up-delay-3">
+            {["3+ Years in Business", "Service-Based Specialists", "Full-Funnel Delivery"].map((item, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <CheckCircle size={14} style={{ color: "#C9A84C" }} />
+                <span className="text-sm" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'DM Sans', sans-serif" }}>
+                  {item}
+                </span>
+              </div>
+            ))}
           </div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <span className="text-xs tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Syne', sans-serif" }}>
-          Scroll
-        </span>
-        <ChevronDown size={16} style={{ color: "rgba(255,255,255,0.3)" }} />
-      </div>
-    </section>
-  );
-}
-
-// ── Client Logos ─────────────────────────────────────────────────────────────
-function ClientLogos() {
-  const clients = [
-    "Mr. Montreal Photobooth",
-    "Le Petit Duck Shoppe",
-    "Wild Magnolia Events",
-    "Momentum Media",
-    "Artisan Co.",
-    "Northside Roofing",
-    "Elite Home Services",
-    "Prestige Renovations",
-  ];
-
-  return (
-    <section
-      className="py-12 overflow-hidden"
-      style={{ background: "#0F1117", borderTop: "1px solid rgba(212,184,74,0.12)", borderBottom: "1px solid rgba(212,184,74,0.12)" }}
-    >
-      <div className="container mb-4">
-        <p
-          className="text-center text-xs tracking-widest uppercase"
-          style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Syne', sans-serif" }}
-        >
-          Trusted by businesses across North America
-        </p>
-      </div>
-      <div className="flex gap-16 items-center" style={{ animation: "none" }}>
-        <div className="flex gap-16 items-center flex-wrap justify-center w-full px-8">
-          {clients.map((client, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-2 whitespace-nowrap"
-              style={{ color: "rgba(255,255,255,0.25)" }}
-            >
-              <span
-                className="w-1.5 h-1.5 rounded-full"
-                style={{ background: "#D4B84A", opacity: 0.6 }}
-              />
-              <span
-                className="text-sm font-medium tracking-wider"
-                style={{ fontFamily: "'Syne', sans-serif" }}
-              >
-                {client}
-              </span>
-            </div>
-          ))}
         </div>
       </div>
     </section>
   );
 }
 
-// ── Stats Counter ─────────────────────────────────────────────────────────────
-function StatsSection() {
+// ── Social Proof Bar ──────────────────────────────────────────────────────────
+function SocialProofBar() {
   const [started, setStarted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -322,43 +222,37 @@ function StatsSection() {
     return () => observer.disconnect();
   }, []);
 
-  const leads = useCounter(2400, 2000, started);
-  const clients = useCounter(85, 1800, started);
-  const roas = useCounter(6, 1500, started);
+  const leads = useCounter(2400, 1800, started);
+  const clients = useCounter(85, 1600, started);
+  const roas = useCounter(6, 1400, started);
 
   const stats = [
-    { value: leads, suffix: "+", label: "Leads Generated" },
-    { value: clients, suffix: "+", label: "Clients Served" },
-    { value: roas, suffix: "x", label: "Average ROAS" },
-    { value: 3, suffix: " yrs", label: "In Business" },
-  ];
-
-  const roasCount = useCounter(3, 1500, started);
-
-  const allStats = [
-    { value: leads, suffix: "+", label: "Leads Generated" },
-    { value: clients, suffix: "+", label: "Clients Served" },
-    { value: roas, suffix: "x", label: "Average ROAS" },
-    { value: roasCount, suffix: " yrs", label: "In Business" },
+    { value: leads, suffix: "+", label: "Leads Generated for Clients" },
+    { value: clients, suffix: "+", label: "Businesses Served" },
+    { value: roas, suffix: "x", label: "Average ROAS Delivered" },
+    { value: 3, suffix: " yrs", label: "Focused on Service Businesses" },
   ];
 
   return (
-    <div ref={ref} className="py-16" style={{ background: "#080C14" }}>
-      <div className="container">
+    <div
+      ref={ref}
+      style={{ background: "#162435", borderBottom: "1px solid rgba(201,168,76,0.12)" }}
+    >
+      <div className="container py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {allStats.map((stat, i) => (
-            <div key={i} className="text-center reveal">
+          {stats.map((s, i) => (
+            <div key={i} className="text-center reveal" style={{ transitionDelay: `${i * 80}ms` }}>
               <div
-                className="text-4xl md:text-5xl font-black mb-2"
-                style={{ fontFamily: "'Syne', sans-serif", color: "#D4B84A" }}
+                className="text-3xl md:text-4xl font-bold mb-1"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "#C9A84C" }}
               >
-                {stat.value}{stat.suffix}
+                {s.value}{s.suffix}
               </div>
               <div
-                className="text-xs tracking-widest uppercase"
-                style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Syne', sans-serif" }}
+                className="text-xs"
+                style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'DM Sans', sans-serif" }}
               >
-                {stat.label}
+                {s.label}
               </div>
             </div>
           ))}
@@ -368,91 +262,106 @@ function StatsSection() {
   );
 }
 
-// ── About / AI Section ────────────────────────────────────────────────────────
-function AboutSection() {
+// ── Client Logos ─────────────────────────────────────────────────────────────
+function ClientLogosSection() {
+  const clients = [
+    "Mr. Montreal Photobooth",
+    "Le Petit Duck Shoppe",
+    "Wild Magnolia Events",
+    "Momentum Media",
+    "Artisan Co.",
+    "Northside Roofing",
+    "Elite Home Services",
+    "Prestige Renovations",
+  ];
+
   return (
-    <section id="about" className="py-24" style={{ background: "#191D28" }}>
-      <div className="container">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Left: image */}
-          <div className="relative reveal">
-            <div
-              className="absolute -inset-4 rounded-none"
-              style={{
-                background: "linear-gradient(135deg, rgba(212,184,74,0.15), transparent)",
-                border: "1px solid rgba(212,184,74,0.2)",
-              }}
-            />
-            <img
-              src={AI_VISUAL}
-              alt="AI-powered marketing"
-              className="relative w-full object-cover"
-              style={{ aspectRatio: "1/1", maxHeight: 480 }}
-            />
-            {/* Floating badge */}
-            <div
-              className="absolute -bottom-4 -right-4 px-5 py-3"
-              style={{
-                background: "#D4B84A",
-                fontFamily: "'Syne', sans-serif",
-                fontWeight: 700,
-                fontSize: "0.75rem",
-                letterSpacing: "0.1em",
-                color: "#080C14",
-                textTransform: "uppercase",
-              }}
+    <section style={{ background: "#FFFFFF", borderBottom: "1px solid #E8ECF0" }}>
+      <div className="container py-12">
+        <p
+          className="text-center text-xs font-semibold tracking-widest uppercase mb-8"
+          style={{ color: "#9CA3AF", fontFamily: "'Montserrat', sans-serif" }}
+        >
+          Trusted by businesses across Canada & the US
+        </p>
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-4">
+          {clients.map((client, i) => (
+            <span
+              key={i}
+              className="text-sm font-medium"
+              style={{ color: "#CBD5E0", fontFamily: "'Montserrat', sans-serif", letterSpacing: "0.02em" }}
             >
-              AI-Accelerated
-            </div>
-          </div>
+              {client}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-          {/* Right: content */}
-          <div className="reveal">
-            <div className="section-label mb-4">Who We Are</div>
-            <h2
-              className="text-4xl md:text-5xl font-black mb-6 leading-tight"
-              style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+// ── What We Do ────────────────────────────────────────────────────────────────
+function ServicesSection() {
+  const services = [
+    {
+      title: "Paid Advertising",
+      description:
+        "We build and manage high-converting ad campaigns on Meta and Google, using AI-driven creative testing to find what works — and scale it.",
+    },
+    {
+      title: "Creative Production",
+      description:
+        "From ad copy to visual assets, we produce everything your campaigns need. No outsourcing, no guesswork — creatives built around your offer and audience.",
+    },
+    {
+      title: "Lead Funnels & Pipelines",
+      description:
+        "We build the backend system your leads flow through — landing pages, follow-up sequences, and CRM pipelines designed to convert interest into booked appointments.",
+    },
+    {
+      title: "Sales Process Optimization",
+      description:
+        "We audit your current sales process and give you concrete improvements to increase close rates. More leads only matters if your team can convert them.",
+    },
+  ];
+
+  return (
+    <section id="services" style={{ background: "#FFFFFF" }}>
+      <div className="container py-24">
+        <div className="max-w-xl mb-16 reveal">
+          <p className="section-eyebrow mb-3">What We Do</p>
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-4"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
+          >
+            A Complete Customer Acquisition System
+          </h2>
+          <p style={{ color: "#718096", lineHeight: 1.8 }}>
+            Most agencies run ads and hand you leads. We build the entire system — from
+            the first impression to the booked appointment — and we use AI at every step
+            to move faster and deliver better results.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {services.map((s, i) => (
+            <div
+              key={i}
+              className="card-white p-8 reveal"
+              style={{ transitionDelay: `${i * 80}ms` }}
             >
-              Not Just an Agency.
-              <br />
-              <span style={{ color: "#D4B84A" }}>A Growth System.</span>
-            </h2>
-            <p className="mb-4" style={{ color: "rgba(255,255,255,0.65)", lineHeight: 1.8 }}>
-              RebelWave was built on one principle: small businesses deserve enterprise-level
-              marketing. We are a Montreal-based digital agency specializing in customer
-              acquisition for service-based businesses — and we handle everything from
-              ad creation to lead pipeline to sales process optimization.
-            </p>
-            <p className="mb-8" style={{ color: "rgba(255,255,255,0.65)", lineHeight: 1.8 }}>
-              What sets us apart is how we work. We leverage cutting-edge AI tools to
-              move faster, test smarter, and deliver results that compound over time.
-              We don't just run your ads — we build the entire system behind them.
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              {[
-                { icon: <Zap size={18} />, label: "AI-Powered Campaigns" },
-                { icon: <Target size={18} />, label: "Full-Funnel Strategy" },
-                { icon: <BarChart3 size={18} />, label: "Pipeline Automation" },
-                { icon: <Users size={18} />, label: "Sales Process Audit" },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <span style={{ color: "#D4B84A" }}>{item.icon}</span>
-                  <span
-                    className="text-sm font-medium"
-                    style={{ color: "rgba(255,255,255,0.7)", fontFamily: "'DM Sans', sans-serif" }}
-                  >
-                    {item.label}
-                  </span>
-                </div>
-              ))}
+              <div className="gold-divider mb-5" />
+              <h3
+                className="text-lg font-bold mb-3"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332" }}
+              >
+                {s.title}
+              </h3>
+              <p className="text-sm" style={{ color: "#718096", lineHeight: 1.8 }}>
+                {s.description}
+              </p>
             </div>
-
-            <a href="#book" className="btn-gold inline-flex items-center gap-2">
-              <span>Work With Us</span>
-              <ArrowRight size={16} />
-            </a>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -466,93 +375,130 @@ function HowItWorksSection() {
       number: "01",
       title: "Strategy Call",
       description:
-        "We start with a deep-dive into your business, your current marketing, and your goals. No fluff — just a clear diagnosis and a plan.",
+        "We start with a clear-eyed review of your business, your current marketing, and your goals. You'll leave the call with a specific plan — whether you work with us or not.",
     },
     {
       number: "02",
       title: "Build the System",
       description:
-        "We build your ad campaigns, creatives, landing pages, and lead pipeline. Every element is designed to work together as one machine.",
+        "We build your campaigns, creatives, landing pages, and lead pipeline. Every component is designed to work together, with AI accelerating the build and testing process.",
     },
     {
       number: "03",
       title: "Launch & Optimize",
       description:
-        "We go live, monitor performance daily, and use AI-driven insights to continuously optimize for lower cost-per-lead and higher conversion.",
+        "We go live, monitor daily, and use data to continuously improve. Our AI tools help us identify winning patterns faster than traditional approaches.",
     },
     {
       number: "04",
       title: "Scale & Report",
       description:
-        "Once the system is proven, we scale what works. You get transparent reporting and regular strategy sessions to keep growing.",
+        "Once we've proven what works, we scale it. You get transparent reporting and regular strategy reviews so you always know exactly where your investment is going.",
     },
   ];
 
   return (
-    <section id="services" className="py-24" style={{ background: "#080C14" }}>
-      <div className="container">
-        <div className="text-center mb-16 reveal">
-          <div className="section-label mb-4">How It Works</div>
+    <section style={{ background: "#F7F8FA" }}>
+      <div className="container py-24">
+        <div className="text-center max-w-xl mx-auto mb-16 reveal">
+          <p className="section-eyebrow mb-3">How It Works</p>
           <h2
-            className="text-4xl md:text-5xl font-black"
-            style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+            className="text-3xl md:text-4xl font-bold"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
           >
-            From Zero to{" "}
-            <span style={{ color: "#D4B84A" }}>Full Pipeline</span>
-            <br />
-            in 4 Steps
+            From First Call to Full Pipeline
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-0">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {steps.map((step, i) => (
             <div
               key={i}
-              className="card-dark reveal p-8 relative"
+              className="reveal"
               style={{ transitionDelay: `${i * 100}ms` }}
             >
-              {/* Step number */}
               <div
-                className="text-6xl font-black mb-6 leading-none"
-                style={{
-                  fontFamily: "'Syne', sans-serif",
-                  color: "rgba(212,184,74,0.12)",
-                  position: "absolute",
-                  top: "1.5rem",
-                  right: "1.5rem",
-                }}
+                className="text-5xl font-bold mb-4"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "rgba(201,168,76,0.2)" }}
               >
                 {step.number}
               </div>
-
-              {/* Gold dot */}
-              <div
-                className="w-2 h-2 rounded-full mb-6"
-                style={{ background: "#D4B84A" }}
-              />
-
               <h3
-                className="text-xl font-bold mb-3"
-                style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+                className="text-base font-bold mb-3"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332" }}
               >
                 {step.title}
               </h3>
-              <p
-                className="text-sm leading-relaxed"
-                style={{ color: "rgba(255,255,255,0.5)" }}
-              >
+              <p className="text-sm" style={{ color: "#718096", lineHeight: 1.8 }}>
                 {step.description}
               </p>
-
-              {/* Connector line */}
-              {i < steps.length - 1 && (
-                <div
-                  className="hidden lg:block absolute top-1/2 -right-px w-px h-16 -translate-y-1/2"
-                  style={{ background: "rgba(212,184,74,0.2)" }}
-                />
-              )}
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── About / AI Section ────────────────────────────────────────────────────────
+function AboutSection() {
+  return (
+    <section id="about" style={{ background: "#0D1B2A" }}>
+      <div className="container py-24">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          {/* Left: image */}
+          <div className="relative reveal order-2 md:order-1">
+            <img
+              src={ABOUT_BG}
+              alt="AI-powered marketing"
+              className="w-full object-cover"
+              style={{ aspectRatio: "4/3" }}
+            />
+            <div
+              className="absolute -bottom-4 -right-4 px-5 py-3"
+              style={{
+                background: "#C9A84C",
+                fontFamily: "'Montserrat', sans-serif",
+                fontWeight: 700,
+                fontSize: "0.7rem",
+                letterSpacing: "0.12em",
+                color: "#0D1B2A",
+                textTransform: "uppercase",
+              }}
+            >
+              AI-Accelerated
+            </div>
+          </div>
+
+          {/* Right: content */}
+          <div className="reveal order-1 md:order-2">
+            <p className="section-eyebrow mb-4">Who We Are</p>
+            <h2
+              className="text-3xl md:text-4xl font-bold mb-6"
+              style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF", lineHeight: 1.25 }}
+            >
+              Built for Service Businesses.
+              <br />
+              <span style={{ color: "#C9A84C" }}>Powered by AI.</span>
+            </h2>
+            <p className="mb-5" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
+              RebelWave was founded in Montreal three years ago with a clear focus: help
+              service-based businesses acquire customers through online marketing. We are
+              not a generalist agency — we specialize in lead generation, and we have
+              refined our process to deliver consistent, measurable results.
+            </p>
+            <p className="mb-8" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
+              What makes us different is how we work. We integrate AI throughout our
+              process — from creative production to audience testing to pipeline
+              automation — so we move faster and deliver better outcomes than agencies
+              relying on traditional methods alone.
+            </p>
+
+            <a href="#book" className="btn-gold">
+              <span>Learn More on a Call</span>
+              <ArrowRight size={15} />
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -562,54 +508,43 @@ function HowItWorksSection() {
 // ── VSL Section ───────────────────────────────────────────────────────────────
 function VSLSection() {
   return (
-    <section id="vsl" className="py-24 relative overflow-hidden" style={{ background: "#191D28" }}>
-      <div className="container">
-        <div className="text-center mb-12 reveal">
-          <div className="section-label mb-4">Our Story</div>
+    <section id="vsl" style={{ background: "#FFFFFF" }}>
+      <div className="container py-24">
+        <div className="text-center max-w-xl mx-auto mb-12 reveal">
+          <p className="section-eyebrow mb-3">See It In Action</p>
           <h2
-            className="text-4xl md:text-5xl font-black"
-            style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+            className="text-3xl md:text-4xl font-bold"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
           >
-            See How We{" "}
-            <span style={{ color: "#D4B84A" }}>Do It</span>
+            Watch How We Build Your Growth System
           </h2>
         </div>
 
-        <div className="max-w-4xl mx-auto reveal">
+        <div className="max-w-3xl mx-auto reveal">
           <div
             className="relative aspect-video flex items-center justify-center"
-            style={{
-              background: "#0F1117",
-              border: "1px solid rgba(212,184,74,0.2)",
-            }}
+            style={{ background: "#F0F4F8", border: "1px solid #E2E8F0" }}
           >
-            {/* Placeholder */}
             <div className="text-center">
               <div
-                className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer transition-transform hover:scale-110"
-                style={{ background: "rgba(212,184,74,0.15)", border: "2px solid #D4B84A" }}
+                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer transition-all hover:scale-105"
+                style={{ background: "#C9A84C" }}
               >
-                <Play size={32} style={{ color: "#D4B84A", marginLeft: 4 }} />
+                <Play size={24} style={{ color: "#0D1B2A", marginLeft: 3 }} />
               </div>
               <p
-                className="text-sm tracking-widest uppercase"
-                style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Syne', sans-serif" }}
+                className="text-sm font-medium"
+                style={{ color: "#9CA3AF", fontFamily: "'Montserrat', sans-serif" }}
               >
                 Video Coming Soon
               </p>
             </div>
-
-            {/* Corner accents */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2" style={{ borderColor: "#D4B84A" }} />
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2" style={{ borderColor: "#D4B84A" }} />
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2" style={{ borderColor: "#D4B84A" }} />
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2" style={{ borderColor: "#D4B84A" }} />
           </div>
 
           <div className="text-center mt-8">
-            <a href="#book" className="btn-gold inline-flex items-center gap-2">
-              <span>Ready to Grow? Book a Call</span>
-              <ArrowRight size={16} />
+            <a href="#book" className="btn-gold">
+              <span>Ready to Get Started? Book a Call</span>
+              <ArrowRight size={15} />
             </a>
           </div>
         </div>
@@ -623,56 +558,44 @@ function CaseStudiesSection() {
   const cases = [
     {
       industry: "Home Renovation",
-      result: "312% increase in qualified leads",
-      detail: "Rebuilt the entire lead funnel from ad to booking. Cut cost-per-lead by 60% in 90 days.",
+      headline: "312% increase in qualified leads in 90 days",
+      detail:
+        "We rebuilt the entire lead funnel from ad to booking. By improving targeting, creative, and the follow-up sequence, cost-per-lead dropped by 60%.",
       metric: "312%",
-      metricLabel: "Lead Increase",
+      metricLabel: "More Qualified Leads",
     },
     {
-      industry: "Landscaping & Outdoor",
-      result: "8.2x ROAS on Meta Ads",
-      detail: "AI-optimized creative testing and audience segmentation delivered record-breaking returns.",
+      industry: "Landscaping",
+      headline: "8.2x ROAS on Meta Ads within 60 days",
+      detail:
+        "AI-driven creative testing and precise audience segmentation delivered returns that significantly outperformed the client's previous agency.",
       metric: "8.2x",
-      metricLabel: "ROAS",
+      metricLabel: "Return on Ad Spend",
     },
     {
       industry: "Cleaning Services",
-      result: "47 booked jobs in first month",
-      detail: "From zero digital presence to a fully automated booking pipeline in under 30 days.",
+      headline: "47 booked jobs in the first month",
+      detail:
+        "Starting from no digital presence, we built a complete acquisition system — ads, landing page, and automated booking pipeline — in under 30 days.",
       metric: "47",
-      metricLabel: "Jobs Booked",
+      metricLabel: "Jobs Booked, Month One",
     },
   ];
 
   return (
-    <section
-      id="results"
-      className="py-24 relative overflow-hidden"
-      style={{ background: "#080C14" }}
-    >
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-15"
-        style={{ backgroundImage: `url(${RESULTS_BG})` }}
-      />
-      <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(180deg, #080C14 0%, rgba(8,12,20,0.7) 50%, #080C14 100%)" }}
-      />
-
-      <div className="container relative z-10">
-        <div className="text-center mb-16 reveal">
-          <div className="section-label mb-4">Case Studies</div>
+    <section id="results" style={{ background: "#F7F8FA" }}>
+      <div className="container py-24">
+        <div className="max-w-xl mb-16 reveal">
+          <p className="section-eyebrow mb-3">Case Studies</p>
           <h2
-            className="text-4xl md:text-5xl font-black"
-            style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+            className="text-3xl md:text-4xl font-bold mb-4"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
           >
-            Real Businesses.
-            <br />
-            <span style={{ color: "#D4B84A" }}>Real Results.</span>
+            Real Businesses. Measurable Results.
           </h2>
-          <p className="mt-4 max-w-xl mx-auto" style={{ color: "rgba(255,255,255,0.5)" }}>
-            Placeholder case studies — your actual results will be featured here.
+          <p style={{ color: "#718096", lineHeight: 1.8 }}>
+            These are placeholder results — your actual case studies will be featured here.
+            Every number below reflects the kind of outcomes we aim to deliver for every client.
           </p>
         </div>
 
@@ -680,44 +603,36 @@ function CaseStudiesSection() {
           {cases.map((c, i) => (
             <div
               key={i}
-              className="card-dark reveal p-8 relative overflow-hidden"
-              style={{ transitionDelay: `${i * 120}ms` }}
+              className="card-white p-8 reveal"
+              style={{ transitionDelay: `${i * 100}ms` }}
             >
-              {/* Big metric */}
               <div
-                className="text-5xl font-black mb-1"
-                style={{ fontFamily: "'Syne', sans-serif", color: "#D4B84A" }}
+                className="text-4xl font-bold mb-1"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "#C9A84C" }}
               >
                 {c.metric}
               </div>
               <div
-                className="text-xs tracking-widest uppercase mb-6"
-                style={{ color: "rgba(212,184,74,0.6)", fontFamily: "'Syne', sans-serif" }}
+                className="text-xs font-semibold tracking-wider uppercase mb-6"
+                style={{ color: "#9CA3AF", fontFamily: "'Montserrat', sans-serif" }}
               >
                 {c.metricLabel}
               </div>
-
               <div
-                className="text-xs tracking-widest uppercase mb-3"
-                style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Syne', sans-serif" }}
+                className="text-xs font-semibold tracking-wider uppercase mb-2"
+                style={{ color: "#C9A84C", fontFamily: "'Montserrat', sans-serif" }}
               >
                 {c.industry}
               </div>
               <h3
-                className="text-lg font-bold mb-3"
-                style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+                className="text-base font-bold mb-3"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332" }}
               >
-                {c.result}
+                {c.headline}
               </h3>
-              <p className="text-sm" style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.7 }}>
+              <p className="text-sm" style={{ color: "#718096", lineHeight: 1.8 }}>
                 {c.detail}
               </p>
-
-              {/* Bottom gold line */}
-              <div
-                className="absolute bottom-0 left-0 right-0 h-px"
-                style={{ background: "linear-gradient(90deg, #D4B84A, transparent)" }}
-              />
             </div>
           ))}
         </div>
@@ -733,36 +648,32 @@ function TestimonialsSection() {
       name: "Client Name",
       company: "Home Services Business",
       quote:
-        "RebelWave completely transformed how we get leads. Within 60 days we had more booked jobs than we could handle. The system they built just works.",
-      stars: 5,
+        "RebelWave changed how we get leads entirely. Within 60 days we had more booked jobs than we could handle. The system they built just works, and the team is genuinely invested in your success.",
     },
     {
       name: "Client Name",
       company: "Renovation Company",
       quote:
-        "I've worked with three agencies before RebelWave. None of them came close. They actually understand the full picture — not just ads, but the whole funnel.",
-      stars: 5,
+        "I've worked with three agencies before RebelWave. None of them came close. They actually understand the full picture — not just ads, but the whole funnel from click to close.",
     },
     {
       name: "Client Name",
       company: "Landscaping Business",
       quote:
-        "The AI-powered approach they use is next level. Our cost per lead dropped by half and the quality of leads went up significantly. Highly recommend.",
-      stars: 5,
+        "The AI-powered approach they use is a real differentiator. Our cost per lead dropped significantly and the quality of leads improved. I'd recommend them to any service business.",
     },
   ];
 
   return (
-    <section id="testimonials" className="py-24" style={{ background: "#191D28" }}>
-      <div className="container">
-        <div className="text-center mb-16 reveal">
-          <div className="section-label mb-4">Testimonials</div>
+    <section id="testimonials" style={{ background: "#FFFFFF" }}>
+      <div className="container py-24">
+        <div className="text-center max-w-xl mx-auto mb-16 reveal">
+          <p className="section-eyebrow mb-3">Testimonials</p>
           <h2
-            className="text-4xl md:text-5xl font-black"
-            style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+            className="text-3xl md:text-4xl font-bold"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
           >
-            What Our Clients{" "}
-            <span style={{ color: "#D4B84A" }}>Say</span>
+            What Our Clients Say
           </h2>
         </div>
 
@@ -770,38 +681,35 @@ function TestimonialsSection() {
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="card-dark reveal p-8"
+              className="card-white p-8 reveal"
               style={{ transitionDelay: `${i * 100}ms` }}
             >
-              {/* Stars */}
-              <div className="flex gap-1 mb-6">
-                {Array.from({ length: t.stars }).map((_, s) => (
-                  <Star key={s} size={14} fill="#D4B84A" style={{ color: "#D4B84A" }} />
+              <div className="flex gap-1 mb-5">
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <Star key={s} size={13} fill="#C9A84C" style={{ color: "#C9A84C" }} />
                 ))}
               </div>
-
               <p
-                className="text-base mb-8 leading-relaxed"
-                style={{ color: "rgba(255,255,255,0.7)", fontStyle: "italic" }}
+                className="text-sm mb-8 italic"
+                style={{ color: "#4A5568", lineHeight: 1.9 }}
               >
                 "{t.quote}"
               </p>
-
               <div className="flex items-center gap-3">
                 <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold"
-                  style={{ background: "rgba(212,184,74,0.15)", color: "#D4B84A", fontFamily: "'Syne', sans-serif" }}
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+                  style={{ background: "#F0F4F8", color: "#C9A84C", fontFamily: "'Montserrat', sans-serif" }}
                 >
                   {t.name[0]}
                 </div>
                 <div>
                   <div
-                    className="text-sm font-bold"
-                    style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+                    className="text-sm font-semibold"
+                    style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332" }}
                   >
                     {t.name}
                   </div>
-                  <div className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>
+                  <div className="text-xs" style={{ color: "#9CA3AF" }}>
                     {t.company}
                   </div>
                 </div>
@@ -830,75 +738,75 @@ function BookingSection() {
     setSubmitted(true);
   };
 
-  return (
-    <section
-      id="book"
-      className="py-24 relative overflow-hidden"
-      style={{ background: "#080C14" }}
-    >
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-20"
-        style={{ backgroundImage: `url(${BOOKING_BG})` }}
-      />
-      <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(180deg, #080C14 0%, rgba(8,12,20,0.5) 50%, #080C14 100%)" }}
-      />
+  const inputStyle: React.CSSProperties = {
+    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(255,255,255,0.1)",
+    color: "#FFFFFF",
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: "0.9rem",
+    padding: "0.75rem 1rem",
+    width: "100%",
+    outline: "none",
+    borderRadius: "2px",
+    transition: "border-color 0.2s ease",
+  };
 
-      <div className="container relative z-10">
+  const labelStyle: React.CSSProperties = {
+    display: "block",
+    fontFamily: "'Montserrat', sans-serif",
+    fontSize: "0.7rem",
+    fontWeight: 600,
+    letterSpacing: "0.1em",
+    textTransform: "uppercase",
+    color: "rgba(255,255,255,0.4)",
+    marginBottom: "0.5rem",
+  };
+
+  return (
+    <section id="book" style={{ background: "#0D1B2A" }}>
+      <div className="container py-24">
         <div className="grid md:grid-cols-2 gap-16 items-start">
           {/* Left: copy */}
           <div className="reveal">
-            <div className="section-label mb-4">Get Started</div>
+            <p className="section-eyebrow mb-4">Get Started</p>
             <h2
-              className="text-4xl md:text-5xl font-black mb-6 leading-tight"
-              style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+              className="text-3xl md:text-4xl font-bold mb-6"
+              style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF", lineHeight: 1.25 }}
             >
-              Ready to Build
+              Ready to Build a Consistent
               <br />
-              Your Lead Machine?
-              <br />
-              <span style={{ color: "#D4B84A" }}>Let's Talk.</span>
+              <span style={{ color: "#C9A84C" }}>Lead Pipeline?</span>
             </h2>
-            <p className="mb-8" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
-              Book a free 30-minute strategy call. We'll review your current marketing,
-              identify the biggest opportunities, and show you exactly what a RebelWave
-              system would look like for your business.
+            <p className="mb-8" style={{ color: "rgba(255,255,255,0.55)", lineHeight: 1.8 }}>
+              Book a free 30-minute strategy call. We'll take a look at your current
+              marketing, identify where the biggest opportunities are, and walk you
+              through what a RebelWave system would look like for your business.
             </p>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-3 mb-10">
               {[
-                "No obligation — just clarity",
-                "We'll audit your current lead gen",
-                "You'll leave with an actionable plan",
-                "We only take clients we can genuinely help",
+                "No obligation — just a clear, honest conversation",
+                "We'll audit your current lead generation setup",
+                "You'll leave with an actionable plan regardless",
+                "We only take on clients we're confident we can help",
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div
-                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    style={{ background: "#D4B84A" }}
-                  />
-                  <span className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+                <div key={i} className="flex items-start gap-3">
+                  <ChevronRight size={15} className="mt-0.5 flex-shrink-0" style={{ color: "#C9A84C" }} />
+                  <span className="text-sm" style={{ color: "rgba(255,255,255,0.55)", lineHeight: 1.7 }}>
                     {item}
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="pt-6" style={{ borderTop: "1px solid rgba(212,184,74,0.15)" }}>
-              <p className="text-xs tracking-widest uppercase mb-2" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Syne', sans-serif" }}>
-                Or book directly
+            <div className="pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+              <p className="text-xs mb-3" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Montserrat', sans-serif", letterSpacing: "0.05em" }}>
+                Prefer to book directly?
               </p>
-              <a
-                href="https://appointments.rebelwave.ca/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-outline-gold inline-flex items-center gap-2 text-sm"
-              >
+              <Link href="/book" className="btn-outline-gold text-sm">
                 <span>Open Booking Calendar</span>
                 <ArrowRight size={14} />
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -907,36 +815,39 @@ function BookingSection() {
             {submitted ? (
               <div
                 className="p-12 text-center"
-                style={{ background: "#0F1117", border: "1px solid rgba(212,184,74,0.3)" }}
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(201,168,76,0.2)" }}
               >
                 <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
-                  style={{ background: "rgba(212,184,74,0.15)", border: "2px solid #D4B84A" }}
+                  className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-5"
+                  style={{ background: "rgba(201,168,76,0.12)", border: "2px solid #C9A84C" }}
                 >
-                  <span style={{ color: "#D4B84A", fontSize: "1.5rem" }}>✓</span>
+                  <CheckCircle size={24} style={{ color: "#C9A84C" }} />
                 </div>
                 <h3
-                  className="text-2xl font-black mb-3"
-                  style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+                  className="text-xl font-bold mb-3"
+                  style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF" }}
                 >
                   Message Received
                 </h3>
-                <p style={{ color: "rgba(255,255,255,0.5)" }}>
+                <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.7 }}>
                   We'll be in touch within 24 hours to schedule your strategy call.
                 </p>
               </div>
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="p-8 space-y-4"
-                style={{ background: "#0F1117", border: "1px solid rgba(212,184,74,0.15)" }}
+                className="p-8 space-y-5"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
               >
                 <h3
-                  className="text-xl font-bold mb-6"
-                  style={{ fontFamily: "'Syne', sans-serif", color: "#FFFFFF" }}
+                  className="text-lg font-bold mb-2"
+                  style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF" }}
                 >
                   Tell Us About Your Business
                 </h3>
+                <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  Fill this in and we'll reach out to schedule your call.
+                </p>
 
                 {[
                   { key: "name", label: "Full Name", type: "text", placeholder: "John Smith" },
@@ -945,60 +856,38 @@ function BookingSection() {
                   { key: "business", label: "Business Type", type: "text", placeholder: "e.g. Roofing, Landscaping, Cleaning..." },
                 ].map((field) => (
                   <div key={field.key}>
-                    <label
-                      className="block text-xs tracking-widest uppercase mb-2"
-                      style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Syne', sans-serif" }}
-                    >
-                      {field.label}
-                    </label>
+                    <label style={labelStyle}>{field.label}</label>
                     <input
                       type={field.type}
                       placeholder={field.placeholder}
                       value={form[field.key as keyof typeof form]}
                       onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
                       required
-                      className="w-full px-4 py-3 text-sm outline-none transition-all duration-200"
-                      style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                        color: "#FFFFFF",
-                        fontFamily: "'DM Sans', sans-serif",
-                      }}
-                      onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(212,184,74,0.5)")}
-                      onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                      style={inputStyle}
+                      onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(201,168,76,0.5)")}
+                      onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")}
                     />
                   </div>
                 ))}
 
                 <div>
-                  <label
-                    className="block text-xs tracking-widest uppercase mb-2"
-                    style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Syne', sans-serif" }}
-                  >
-                    What's Your Biggest Marketing Challenge?
-                  </label>
+                  <label style={labelStyle}>What's Your Biggest Marketing Challenge?</label>
                   <textarea
                     placeholder="Tell us where you're struggling..."
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     rows={3}
-                    className="w-full px-4 py-3 text-sm outline-none transition-all duration-200 resize-none"
-                    style={{
-                      background: "rgba(255,255,255,0.04)",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      color: "#FFFFFF",
-                      fontFamily: "'DM Sans', sans-serif",
-                    }}
-                    onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(212,184,74,0.5)")}
-                    onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                    style={{ ...inputStyle, resize: "none" }}
+                    onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(201,168,76,0.5)")}
+                    onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)")}
                   />
                 </div>
 
                 <button type="submit" className="btn-gold w-full mt-2">
-                  <span>Send My Info — Let's Talk</span>
+                  Send My Info — Let's Talk
                 </button>
 
-                <p className="text-xs text-center" style={{ color: "rgba(255,255,255,0.25)" }}>
+                <p className="text-xs text-center" style={{ color: "rgba(255,255,255,0.2)" }}>
                   We respect your privacy. No spam, ever.
                 </p>
               </form>
@@ -1013,34 +902,45 @@ function BookingSection() {
 // ── Footer ────────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer
-      className="py-16"
-      style={{ background: "#0F1117", borderTop: "1px solid rgba(212,184,74,0.12)" }}
-    >
-      <div className="container">
+    <footer style={{ background: "#091422", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="container py-16">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
-          {/* Brand */}
           <div className="md:col-span-2">
-            <img src={LOGO_URL} alt="RebelWave" className="h-10 w-auto mb-4" />
-            <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.4)", lineHeight: 1.8, maxWidth: 280 }}>
+            <img src={LOGO_URL} alt="RebelWave" className="h-9 w-auto mb-5" />
+            <p
+              className="text-sm mb-6"
+              style={{ color: "rgba(255,255,255,0.35)", lineHeight: 1.8, maxWidth: 300 }}
+            >
               AI-powered digital marketing for service-based businesses. We build the
               systems that bring you consistent, qualified leads.
             </p>
-            <HeartbeatLine className="w-48 opacity-40" />
+            <div className="flex gap-4">
+              {["Facebook", "Instagram", "LinkedIn"].map((s) => (
+                <a
+                  key={s}
+                  href="#"
+                  className="text-xs font-medium transition-colors duration-200"
+                  style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Montserrat', sans-serif" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}
+                >
+                  {s}
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Links */}
           <div>
-            <div className="section-label mb-4">Navigation</div>
+            <div className="section-eyebrow mb-5">Navigation</div>
             <div className="space-y-3">
-              {["Who We Are", "What We Do", "Results", "Testimonials", "Book a Call"].map((link) => (
+              {["What We Do", "Results", "About", "Testimonials", "Book a Call"].map((link) => (
                 <div key={link}>
                   <a
                     href={`#${link.toLowerCase().replace(/ /g, "-")}`}
                     className="text-sm transition-colors duration-200"
-                    style={{ color: "rgba(255,255,255,0.4)" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#D4B84A")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+                    style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'DM Sans', sans-serif" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
                   >
                     {link}
                   </a>
@@ -1049,17 +949,16 @@ function Footer() {
             </div>
           </div>
 
-          {/* Contact */}
           <div>
-            <div className="section-label mb-4">Contact</div>
-            <div className="space-y-3 text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <div className="section-eyebrow mb-5">Contact</div>
+            <div className="space-y-3 text-sm" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'DM Sans', sans-serif" }}>
               <div>Montreal, Quebec, Canada</div>
               <div>
                 <a
                   href="tel:5146512426"
-                  style={{ color: "rgba(255,255,255,0.4)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#D4B84A")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+                  style={{ color: "rgba(255,255,255,0.35)" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
                 >
                   514-651-2426
                 </a>
@@ -1067,15 +966,12 @@ function Footer() {
               <div>
                 <a
                   href="mailto:info@rebelwave.ca"
-                  style={{ color: "rgba(255,255,255,0.4)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#D4B84A")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+                  style={{ color: "rgba(255,255,255,0.35)" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.35)")}
                 >
                   info@rebelwave.ca
                 </a>
-              </div>
-              <div className="pt-2 text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>
-                Service Areas: Canada · USA · UK
               </div>
             </div>
           </div>
@@ -1083,7 +979,7 @@ function Footer() {
 
         <div
           className="flex flex-col md:flex-row items-center justify-between pt-8 text-xs"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.2)" }}
+          style={{ borderTop: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.2)", fontFamily: "'DM Sans', sans-serif" }}
         >
           <span>© 2024 RebelWave Digital Marketing. All rights reserved.</span>
           <span className="mt-2 md:mt-0">Montreal, QC · Canada</span>
@@ -1098,13 +994,14 @@ export default function Home() {
   useReveal();
 
   return (
-    <div className="min-h-screen" style={{ background: "#080C14" }}>
+    <div className="min-h-screen">
       <Navbar />
       <HeroSection />
-      <ClientLogos />
-      <StatsSection />
-      <AboutSection />
+      <SocialProofBar />
+      <ClientLogosSection />
+      <ServicesSection />
       <HowItWorksSection />
+      <AboutSection />
       <VSLSection />
       <CaseStudiesSection />
       <TestimonialsSection />
