@@ -13,7 +13,7 @@ import { ArrowRight, Play, Star, Menu, X, CheckCircle, ChevronRight } from "luci
 // ── Asset URLs ──────────────────────────────────────────────────────────────
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rw-hero-v2-ddMKUT9thZECwdNUJxcWWL.webp";
 const ABOUT_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rw-about-v3-MZRbX3N2kpUTbaQuS7GttM.webp";
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rebelwave-logo_61d3bb46.webp";
+const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/RW_White&Gold_e3f64ab9.webp";
 
 // ── Scroll reveal hook ───────────────────────────────────────────────────────
 function useReveal() {
@@ -445,72 +445,199 @@ function WhyAgencySection() {
   );
 }
 
-// ── How It Works ──────────────────────────────────────────────────────────────
-function HowItWorksSection() {
-  const steps = [
+// ── Other Services ────────────────────────────────────────────────────────────
+function OtherServicesSection() {
+  const services = [
     {
-      number: "01",
-      title: "Strategy Call",
+      title: "Website & Landing Page Builds",
       description:
-        "We start with a clear-eyed review of your business, your current marketing, and your goals. You'll leave the call with a specific plan — whether you work with us or not.",
+        "We design and build high-converting websites and landing pages tailored to your offer and audience. Every page is built with one goal: turn visitors into leads.",
+      icon: "🌐",
+      featured: false,
     },
     {
-      number: "02",
-      title: "Build the System",
+      title: "Sales Funnel Builds",
       description:
-        "We build your campaigns, creatives, landing pages, and lead pipeline. Every component is designed to work together, with AI accelerating the build and testing process.",
+        "From opt-in to booked appointment, we architect the full funnel — multi-step forms, VSL pages, thank-you flows, and automated follow-up sequences that work while you sleep.",
+      icon: "⚡",
+      featured: false,
     },
     {
-      number: "03",
-      title: "Launch & Optimize",
+      title: "SEO",
       description:
-        "We go live, monitor daily, and use data to continuously improve. Our AI tools help us identify winning patterns faster than traditional approaches.",
-    },
-    {
-      number: "04",
-      title: "Scale & Report",
-      description:
-        "Once we've proven what works, we scale it. You get transparent reporting and regular strategy reviews so you always know exactly where your investment is going.",
+        "We build your long-term organic presence with strategic SEO — keyword research, on-page optimization, and content strategy designed to bring you qualified traffic month after month.",
+      icon: "📈",
+      featured: false,
     },
   ];
 
   return (
     <section style={{ background: "#FFFFFF" }}>
       <div className="container py-24">
-        <div className="text-center max-w-xl mx-auto mb-16 reveal">
-          <p className="section-eyebrow mb-3">How It Works</p>
+        <div className="max-w-xl mb-16 reveal">
+          <p className="section-eyebrow mb-3">More Ways We Help</p>
           <h2
-            className="text-3xl md:text-4xl font-bold"
+            className="text-3xl md:text-4xl font-bold mb-4"
             style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
           >
-            From First Call to Full Pipeline
+            Beyond Ads — A Full Growth Stack
           </h2>
+          <p style={{ color: "#718096", lineHeight: 1.8 }}>
+            We go further than most agencies. Whether you need a better website, a smarter
+            funnel, or the most advanced AI sales technology available — we have you covered.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((step, i) => (
+        {/* Standard services grid */}
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          {services.map((s, i) => (
             <div
               key={i}
-              className="reveal"
-              style={{ transitionDelay: `${i * 100}ms` }}
+              className="p-8 reveal"
+              style={{
+                transitionDelay: `${i * 80}ms`,
+                background: "#F7F8FA",
+                border: "1px solid #E8ECF0",
+              }}
             >
-              <div
-                className="text-5xl font-bold mb-4"
-                style={{ fontFamily: "'Montserrat', sans-serif", color: "rgba(201,168,76,0.2)" }}
-              >
-                {step.number}
-              </div>
+              <div className="text-2xl mb-4">{s.icon}</div>
+              <div className="gold-divider mb-4" />
               <h3
                 className="text-base font-bold mb-3"
                 style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332" }}
               >
-                {step.title}
+                {s.title}
               </h3>
               <p className="text-sm" style={{ color: "#718096", lineHeight: 1.8 }}>
-                {step.description}
+                {s.description}
               </p>
             </div>
           ))}
+        </div>
+
+        {/* AI Voice Agent — Featured Card */}
+        <div
+          className="reveal p-0 overflow-hidden"
+          style={{
+            background: "#0D1B2A",
+            border: "1px solid rgba(201,168,76,0.35)",
+            boxShadow: "0 0 60px rgba(201,168,76,0.08), 0 8px 40px rgba(0,0,0,0.3)",
+          }}
+        >
+          <div className="grid md:grid-cols-2">
+            {/* Left: content */}
+            <div className="p-10 md:p-12">
+              <div
+                className="inline-flex items-center gap-2 mb-5 px-3 py-1.5"
+                style={{
+                  background: "rgba(201,168,76,0.12)",
+                  border: "1px solid rgba(201,168,76,0.3)",
+                  borderRadius: "2px",
+                }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#C9A84C" }} />
+                <span
+                  className="text-xs font-semibold tracking-widest uppercase"
+                  style={{ fontFamily: "'Montserrat', sans-serif", color: "#C9A84C" }}
+                >
+                  Exclusive Partnership
+                </span>
+              </div>
+
+              <h3
+                className="text-2xl md:text-3xl font-bold mb-4"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF", lineHeight: 1.3 }}
+              >
+                AI Voice Agents
+                <br />
+                <span style={{ color: "#C9A84C" }}>Powered by Lexson AI</span>
+              </h3>
+
+              <p className="mb-5" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
+                Through our exclusive partnership with <strong style={{ color: "#FFFFFF" }}>Lexson AI</strong> —
+                the leading developer of voice AI sales agents — we can deploy intelligent AI agents
+                that call, qualify, and book your leads automatically, 24 hours a day, 7 days a week.
+              </p>
+              <p className="mb-8" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
+                No more missed calls. No more slow follow-up. Your AI agent responds to every
+                new lead within seconds, handles objections naturally, and books qualified
+                appointments directly into your calendar — without any human intervention.
+              </p>
+
+              <div className="space-y-3 mb-8">
+                {[
+                  "Responds to leads in under 60 seconds",
+                  "Qualifies prospects using your exact criteria",
+                  "Books appointments directly into your calendar",
+                  "Works 24/7 — nights, weekends, holidays",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <ChevronRight size={14} className="mt-0.5 flex-shrink-0" style={{ color: "#C9A84C" }} />
+                    <span className="text-sm" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.7 }}>
+                      {item}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <a href="#book" className="btn-gold">
+                <span>Ask About AI Voice Agents</span>
+                <ArrowRight size={15} />
+              </a>
+            </div>
+
+            {/* Right: visual */}
+            <div
+              className="relative flex items-center justify-center p-12"
+              style={{ background: "rgba(201,168,76,0.04)", borderLeft: "1px solid rgba(201,168,76,0.12)" }}
+            >
+              {/* Animated pulse rings */}
+              <div className="relative flex items-center justify-center">
+                <div
+                  className="absolute w-48 h-48 rounded-full animate-ping"
+                  style={{ background: "rgba(201,168,76,0.04)", animationDuration: "2.5s" }}
+                />
+                <div
+                  className="absolute w-36 h-36 rounded-full animate-ping"
+                  style={{ background: "rgba(201,168,76,0.06)", animationDuration: "2s", animationDelay: "0.3s" }}
+                />
+                <div
+                  className="absolute w-24 h-24 rounded-full"
+                  style={{ background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.2)" }}
+                />
+                {/* Mic icon center */}
+                <div
+                  className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center"
+                  style={{ background: "#C9A84C" }}
+                >
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                    <rect x="9" y="2" width="6" height="11" rx="3" fill="#0D1B2A" />
+                    <path d="M5 10a7 7 0 0 0 14 0" stroke="#0D1B2A" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="12" y1="17" x2="12" y2="21" stroke="#0D1B2A" strokeWidth="2" strokeLinecap="round" />
+                    <line x1="8" y1="21" x2="16" y2="21" stroke="#0D1B2A" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Floating label */}
+              <div
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center"
+              >
+                <div
+                  className="px-4 py-2 text-xs font-semibold tracking-wider uppercase"
+                  style={{
+                    fontFamily: "'Montserrat', sans-serif",
+                    color: "#C9A84C",
+                    border: "1px solid rgba(201,168,76,0.25)",
+                    background: "rgba(201,168,76,0.06)",
+                    borderRadius: "2px",
+                  }}
+                >
+                  In Partnership with Lexson AI
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1117,7 +1244,7 @@ export default function Home() {
       <ClientLogosSection />
       <ServicesSection />
       <WhyAgencySection />
-      <HowItWorksSection />
+      <OtherServicesSection />
       <AboutSection />
       <VSLSection />
       <CaseStudiesSection />

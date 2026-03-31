@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Clock, CheckCircle } from "lucide-react";
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rebelwave-logo_61d3bb46.webp";
+const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/RW_White&Gold_e3f64ab9.webp";
 
 export default function BookingPage() {
   useEffect(() => {
