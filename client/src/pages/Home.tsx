@@ -1,7 +1,7 @@
 /* =============================================================================
-   REBELWAVE HOME PAGE v2 — Clean Professional Design
+   REBELWAVE HOME PAGE v3 — Clean Professional Design
    Inspired by: heathmedia.co.uk
-   Design: Dark navy hero → white content sections → dark footer
+   Design: Dark navy hero → white/light content sections → dark footer
    Typography: Montserrat headings, DM Sans body
    Tone: Professional, results-driven, relatable — not aggressive
    ============================================================================= */
@@ -12,7 +12,7 @@ import { ArrowRight, Play, Star, Menu, X, CheckCircle, ChevronRight } from "luci
 
 // ── Asset URLs ──────────────────────────────────────────────────────────────
 const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rw-hero-v2-ddMKUT9thZECwdNUJxcWWL.webp";
-const ABOUT_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rw-about-v2-LJSab7qF4jpnrCWQZwTQYb.webp";
+const ABOUT_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rw-about-v3-MZRbX3N2kpUTbaQuS7GttM.webp";
 const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rebelwave-logo_61d3bb46.webp";
 
 // ── Scroll reveal hook ───────────────────────────────────────────────────────
@@ -73,6 +73,7 @@ function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-400" style={navStyle}>
       <div className="container flex items-center justify-between py-5">
         <a href="#" className="flex items-center">
+          {/* Logo — will be updated once hi-res file is provided */}
           <img src={LOGO_URL} alt="RebelWave" className="h-9 w-auto" />
         </a>
 
@@ -148,10 +149,7 @@ function HeroSection() {
               borderRadius: "2px",
             }}
           >
-            <span
-              className="w-1.5 h-1.5 rounded-full"
-              style={{ background: "#C9A84C" }}
-            />
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: "#C9A84C" }} />
             <span
               className="text-xs font-semibold tracking-widest uppercase"
               style={{ fontFamily: "'Montserrat', sans-serif", color: "#C9A84C" }}
@@ -175,7 +173,7 @@ function HeroSection() {
             className="text-lg mb-10 animate-fade-in-up-delay-2"
             style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8, maxWidth: "520px" }}
           >
-            RebelWave is a full-service digital marketing agency that uses AI to help
+            RebelWAVE is a full-service digital marketing agency that uses AI to help
             service-based businesses acquire more customers — faster, and at a lower cost.
             We handle everything from ad creation to lead pipeline to sales process.
           </p>
@@ -193,7 +191,7 @@ function HeroSection() {
 
           {/* Quick trust signals */}
           <div className="flex flex-wrap gap-6 mt-12 animate-fade-in-up-delay-3">
-            {["3+ Years in Business", "Service-Based Specialists", "Full-Funnel Delivery"].map((item, i) => (
+            {["Sales Process Audit", "Service-Based Specialists", "Full-Funnel Delivery"].map((item, i) => (
               <div key={i} className="flex items-center gap-2">
                 <CheckCircle size={14} style={{ color: "#C9A84C" }} />
                 <span className="text-sm" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'DM Sans', sans-serif" }}>
@@ -223,14 +221,13 @@ function SocialProofBar() {
   }, []);
 
   const leads = useCounter(2400, 1800, started);
-  const clients = useCounter(85, 1600, started);
   const roas = useCounter(6, 1400, started);
 
+  // Only 2 stats shown (removed "Businesses Served" and "Years" per user request)
   const stats = [
     { value: leads, suffix: "+", label: "Leads Generated for Clients" },
-    { value: clients, suffix: "+", label: "Businesses Served" },
+    { value: 20, suffix: "+", label: "Businesses Served" },
     { value: roas, suffix: "x", label: "Average ROAS Delivered" },
-    { value: 3, suffix: " yrs", label: "Focused on Service Businesses" },
   ];
 
   return (
@@ -239,7 +236,7 @@ function SocialProofBar() {
       style={{ background: "#162435", borderBottom: "1px solid rgba(201,168,76,0.12)" }}
     >
       <div className="container py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-3 gap-8">
           {stats.map((s, i) => (
             <div key={i} className="text-center reveal" style={{ transitionDelay: `${i * 80}ms` }}>
               <div
@@ -306,7 +303,7 @@ function ServicesSection() {
     {
       title: "Paid Advertising",
       description:
-        "We build and manage high-converting ad campaigns on Meta and Google, using AI-driven creative testing to find what works — and scale it.",
+        "We build and manage high-converting ad campaigns on Meta, using AI-driven creative testing to find what works — and scale it.",
     },
     {
       title: "Creative Production",
@@ -326,17 +323,17 @@ function ServicesSection() {
   ];
 
   return (
-    <section id="services" style={{ background: "#FFFFFF" }}>
+    <section id="services" style={{ background: "#172434" }}>
       <div className="container py-24">
         <div className="max-w-xl mb-16 reveal">
           <p className="section-eyebrow mb-3">What We Do</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-4"
-            style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
+            style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF", lineHeight: 1.25 }}
           >
             A Complete Customer Acquisition System
           </h2>
-          <p style={{ color: "#718096", lineHeight: 1.8 }}>
+          <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}>
             Most agencies run ads and hand you leads. We build the entire system — from
             the first impression to the booked appointment — and we use AI at every step
             to move faster and deliver better results.
@@ -347,8 +344,12 @@ function ServicesSection() {
           {services.map((s, i) => (
             <div
               key={i}
-              className="card-white p-8 reveal"
-              style={{ transitionDelay: `${i * 80}ms` }}
+              className="p-8 reveal"
+              style={{
+                transitionDelay: `${i * 80}ms`,
+                background: "#FFFFFF",
+                boxShadow: "0 4px 24px rgba(0,0,0,0.25)",
+              }}
             >
               <div className="gold-divider mb-5" />
               <h3
@@ -359,6 +360,82 @@ function ServicesSection() {
               </h3>
               <p className="text-sm" style={{ color: "#718096", lineHeight: 1.8 }}>
                 {s.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Why Hire an Agency ────────────────────────────────────────────────────────
+function WhyAgencySection() {
+  const reasons = [
+    {
+      number: "01",
+      title: "Only a Team Can Sustain an Ad Account",
+      description:
+        "A successful ad account is not a one-time setup — it requires daily monitoring, creative refreshes, audience testing, and strategic pivots. Only a dedicated team can deliver the consistent attention an ad account needs to stay profitable over time.",
+    },
+    {
+      number: "02",
+      title: "Once You Find What Works, It's Infinitely Scalable",
+      description:
+        "The real value of advertising isn't the first lead — it's the system. When you identify a winning combination of audience, creative, and offer, you can scale that investment predictably. An agency builds and finds that system faster than going it alone.",
+    },
+    {
+      number: "03",
+      title: "This Is a Long-Term Asset, Not a Quick Fix",
+      description:
+        "Businesses that win with advertising treat it as a core business system, not a short-term experiment. We build your acquisition engine with the future in mind — so every dollar spent compounds into a stronger, more reliable pipeline over time.",
+    },
+    {
+      number: "04",
+      title: "Speed and Expertise You Can't Replicate In-House",
+      description:
+        "We've run hundreds of campaigns across dozens of service industries. That pattern recognition — knowing what works before you spend a dollar testing it — is what separates a seasoned agency from a business owner running ads for the first time.",
+    },
+  ];
+
+  return (
+    <section style={{ background: "#F7F8FA" }}>
+      <div className="container py-24">
+        <div className="max-w-xl mb-16 reveal">
+          <p className="section-eyebrow mb-3">Why an Agency</p>
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-4"
+            style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
+          >
+            Why Build an Advertising Strategy for the Long Term?
+          </h2>
+          <p style={{ color: "#718096", lineHeight: 1.8 }}>
+            The businesses that grow consistently aren't the ones who ran a campaign once.
+            They're the ones who committed to building a system — and had the right team to run it.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {reasons.map((r, i) => (
+            <div
+              key={i}
+              className="reveal"
+              style={{ transitionDelay: `${i * 100}ms` }}
+            >
+              <div
+                className="text-5xl font-bold mb-3"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "rgba(201,168,76,0.2)" }}
+              >
+                {r.number}
+              </div>
+              <h3
+                className="text-base font-bold mb-3"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332" }}
+              >
+                {r.title}
+              </h3>
+              <p className="text-sm" style={{ color: "#718096", lineHeight: 1.8 }}>
+                {r.description}
               </p>
             </div>
           ))}
@@ -398,7 +475,7 @@ function HowItWorksSection() {
   ];
 
   return (
-    <section style={{ background: "#F7F8FA" }}>
+    <section style={{ background: "#FFFFFF" }}>
       <div className="container py-24">
         <div className="text-center max-w-xl mx-auto mb-16 reveal">
           <p className="section-eyebrow mb-3">How It Works</p>
@@ -450,7 +527,7 @@ function AboutSection() {
           <div className="relative reveal order-2 md:order-1">
             <img
               src={ABOUT_BG}
-              alt="AI-powered marketing"
+              alt="RebelWave team reviewing campaign analytics"
               className="w-full object-cover"
               style={{ aspectRatio: "4/3" }}
             />
@@ -482,10 +559,10 @@ function AboutSection() {
               <span style={{ color: "#C9A84C" }}>Powered by AI.</span>
             </h2>
             <p className="mb-5" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
-              RebelWave was founded in Montreal three years ago with a clear focus: help
-              service-based businesses acquire customers through online marketing. We are
-              not a generalist agency — we specialize in lead generation, and we have
-              refined our process to deliver consistent, measurable results.
+              RebelWave was founded with a clear focus: help service-based businesses
+              acquire customers through online marketing. We are not a generalist agency
+              — we specialize in lead generation, and we have refined our process to
+              deliver consistent, measurable results.
             </p>
             <p className="mb-8" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
               What makes us different is how we work. We integrate AI throughout our
@@ -603,8 +680,13 @@ function CaseStudiesSection() {
           {cases.map((c, i) => (
             <div
               key={i}
-              className="card-white p-8 reveal"
-              style={{ transitionDelay: `${i * 100}ms` }}
+              className="p-8 reveal"
+              style={{
+                transitionDelay: `${i * 100}ms`,
+                background: "#FFFFFF",
+                border: "1px solid #E8ECF0",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
+              }}
             >
               <div
                 className="text-4xl font-bold mb-1"
@@ -681,8 +763,13 @@ function TestimonialsSection() {
           {testimonials.map((t, i) => (
             <div
               key={i}
-              className="card-white p-8 reveal"
-              style={{ transitionDelay: `${i * 100}ms` }}
+              className="p-8 reveal"
+              style={{
+                transitionDelay: `${i * 100}ms`,
+                background: "#FFFFFF",
+                border: "1px solid #E8ECF0",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.07)",
+              }}
             >
               <div className="flex gap-1 mb-5">
                 {Array.from({ length: 5 }).map((_, s) => (
@@ -729,6 +816,7 @@ function BookingSection() {
     email: "",
     phone: "",
     business: "",
+    hasAdvertised: "",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
@@ -870,8 +958,36 @@ function BookingSection() {
                   </div>
                 ))}
 
+                {/* Yes/No: Have you ever done advertising before? */}
                 <div>
-                  <label style={labelStyle}>What's Your Biggest Marketing Challenge?</label>
+                  <label style={labelStyle}>Have you ever done advertising before?</label>
+                  <div className="flex gap-3 mt-1">
+                    {["Yes", "No"].map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() => setForm({ ...form, hasAdvertised: option })}
+                        className="flex-1 py-2.5 text-sm font-semibold transition-all duration-200"
+                        style={{
+                          fontFamily: "'Montserrat', sans-serif",
+                          borderRadius: "2px",
+                          border: form.hasAdvertised === option
+                            ? "1.5px solid #C9A84C"
+                            : "1px solid rgba(255,255,255,0.1)",
+                          background: form.hasAdvertised === option
+                            ? "rgba(201,168,76,0.12)"
+                            : "rgba(255,255,255,0.04)",
+                          color: form.hasAdvertised === option ? "#C9A84C" : "rgba(255,255,255,0.45)",
+                        }}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <label style={labelStyle}>What's Your Biggest Challenge with Leads?</label>
                   <textarea
                     placeholder="Tell us where you're struggling..."
                     value={form.message}
@@ -1000,6 +1116,7 @@ export default function Home() {
       <SocialProofBar />
       <ClientLogosSection />
       <ServicesSection />
+      <WhyAgencySection />
       <HowItWorksSection />
       <AboutSection />
       <VSLSection />
