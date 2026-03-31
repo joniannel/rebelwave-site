@@ -57,10 +57,10 @@ function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: "What We Do", href: "#services" },
+    { label: "Why an Agency", href: "#why-agency" },
     { label: "Results", href: "#results" },
     { label: "About", href: "#about" },
-    { label: "Testimonials", href: "#testimonials" },
+    { label: "Voice AI", href: "#voice-ai" },
   ];
 
   const navStyle: React.CSSProperties = {
@@ -371,6 +371,7 @@ function ServicesSection() {
 
 // ── Why Hire an Agency ────────────────────────────────────────────────────────
 function WhyAgencySection() {
+  // id="why-agency" for nav link
   const reasons = [
     {
       number: "01",
@@ -399,7 +400,7 @@ function WhyAgencySection() {
   ];
 
   return (
-    <section style={{ background: "#F7F8FA" }}>
+    <section id="why-agency" style={{ background: "#F7F8FA" }}>
       <div className="container py-24">
         <div className="max-w-xl mb-16 reveal">
           <p className="section-eyebrow mb-3">Why an Agency</p>
@@ -517,6 +518,7 @@ function OtherServicesSection() {
 
         {/* AI Voice Agent — Featured Card */}
         <div
+          id="voice-ai"
           className="reveal p-0 overflow-hidden"
           style={{
             background: "#0D1B2A",
@@ -540,7 +542,7 @@ function OtherServicesSection() {
                   className="text-xs font-semibold tracking-widest uppercase"
                   style={{ fontFamily: "'Montserrat', sans-serif", color: "#C9A84C" }}
                 >
-                  Exclusive Partnership
+                  Partnership with Lexson AI
                 </span>
               </div>
 
@@ -554,7 +556,7 @@ function OtherServicesSection() {
               </h3>
 
               <p className="mb-5" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
-                Through our exclusive partnership with <strong style={{ color: "#FFFFFF" }}>Lexson AI</strong> —
+                Through our partnership with <strong style={{ color: "#FFFFFF" }}>Lexson AI</strong> —
                 the leading developer of voice AI sales agents — we can deploy intelligent AI agents
                 that call, qualify, and book your leads automatically, 24 hours a day, 7 days a week.
               </p>
@@ -586,38 +588,13 @@ function OtherServicesSection() {
               </a>
             </div>
 
-            {/* Right: visual */}
+              {/* Right: visual — mic button plays voice clip when uploaded */}
             <div
               className="relative flex items-center justify-center p-12"
               style={{ background: "rgba(201,168,76,0.04)", borderLeft: "1px solid rgba(201,168,76,0.12)" }}
             >
               {/* Animated pulse rings */}
-              <div className="relative flex items-center justify-center">
-                <div
-                  className="absolute w-48 h-48 rounded-full animate-ping"
-                  style={{ background: "rgba(201,168,76,0.04)", animationDuration: "2.5s" }}
-                />
-                <div
-                  className="absolute w-36 h-36 rounded-full animate-ping"
-                  style={{ background: "rgba(201,168,76,0.06)", animationDuration: "2s", animationDelay: "0.3s" }}
-                />
-                <div
-                  className="absolute w-24 h-24 rounded-full"
-                  style={{ background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.2)" }}
-                />
-                {/* Mic icon center */}
-                <div
-                  className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center"
-                  style={{ background: "#C9A84C" }}
-                >
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                    <rect x="9" y="2" width="6" height="11" rx="3" fill="#0D1B2A" />
-                    <path d="M5 10a7 7 0 0 0 14 0" stroke="#0D1B2A" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="12" y1="17" x2="12" y2="21" stroke="#0D1B2A" strokeWidth="2" strokeLinecap="round" />
-                    <line x1="8" y1="21" x2="16" y2="21" stroke="#0D1B2A" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                </div>
-              </div>
+              <VoicePlayButton />
 
               {/* Floating label */}
               <div
@@ -633,7 +610,7 @@ function OtherServicesSection() {
                     borderRadius: "2px",
                   }}
                 >
-                  In Partnership with Lexson AI
+                  We integrate the Agent directly into your campaigns
                 </div>
               </div>
             </div>
@@ -644,17 +621,97 @@ function OtherServicesSection() {
   );
 }
 
+// ── Voice Play Button ────────────────────────────────────────────────────────
+function VoicePlayButton() {
+  const [playing, setPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Replace VOICE_CLIP_URL with your actual audio file URL when ready
+  const VOICE_CLIP_URL = ""; // placeholder — upload your voice clip and paste the URL here
+
+  const handlePlay = () => {
+    if (!VOICE_CLIP_URL) {
+      // Placeholder: show visual feedback but no audio yet
+      setPlaying(true);
+      setTimeout(() => setPlaying(false), 2000);
+      return;
+    }
+    if (!audioRef.current) {
+      audioRef.current = new Audio(VOICE_CLIP_URL);
+      audioRef.current.onended = () => setPlaying(false);
+    }
+    if (playing) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setPlaying(false);
+    } else {
+      audioRef.current.play();
+      setPlaying(true);
+    }
+  };
+
+  return (
+    <div className="relative flex flex-col items-center justify-center gap-8">
+      {/* Pulse rings */}
+      <div className="relative flex items-center justify-center">
+        <div
+          className="absolute w-48 h-48 rounded-full"
+          style={{
+            background: playing ? "rgba(201,168,76,0.08)" : "rgba(201,168,76,0.04)",
+            animation: playing ? "ping 1.2s cubic-bezier(0,0,0.2,1) infinite" : "ping 2.5s cubic-bezier(0,0,0.2,1) infinite",
+          }}
+        />
+        <div
+          className="absolute w-36 h-36 rounded-full animate-ping"
+          style={{ background: "rgba(201,168,76,0.06)", animationDuration: playing ? "1s" : "2s", animationDelay: "0.3s" }}
+        />
+        <div
+          className="absolute w-24 h-24 rounded-full"
+          style={{ background: "rgba(201,168,76,0.08)", border: "1px solid rgba(201,168,76,0.2)" }}
+        />
+        {/* Mic/Play button */}
+        <button
+          onClick={handlePlay}
+          className="relative z-10 w-20 h-20 rounded-full flex items-center justify-center transition-transform duration-200 hover:scale-105"
+          style={{ background: playing ? "#a8893c" : "#C9A84C", cursor: "pointer" }}
+          title={playing ? "Stop" : "Hear a sample AI voice call"}
+        >
+          {playing ? (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect x="6" y="5" width="4" height="14" rx="1" fill="#0D1B2A" />
+              <rect x="14" y="5" width="4" height="14" rx="1" fill="#0D1B2A" />
+            </svg>
+          ) : (
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <rect x="9" y="2" width="6" height="11" rx="3" fill="#0D1B2A" />
+              <path d="M5 10a7 7 0 0 0 14 0" stroke="#0D1B2A" strokeWidth="2" strokeLinecap="round" />
+              <line x1="12" y1="17" x2="12" y2="21" stroke="#0D1B2A" strokeWidth="2" strokeLinecap="round" />
+              <line x1="8" y1="21" x2="16" y2="21" stroke="#0D1B2A" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          )}
+        </button>
+      </div>
+      <p
+        className="text-xs font-medium tracking-wider uppercase text-center"
+        style={{ fontFamily: "'Montserrat', sans-serif", color: "rgba(201,168,76,0.6)" }}
+      >
+        {playing ? "Playing sample call..." : "Tap to hear an AI voice agent"}
+      </p>
+    </div>
+  );
+}
+
 // ── About / AI Section ────────────────────────────────────────────────────────
 function AboutSection() {
   return (
     <section id="about" style={{ background: "#0D1B2A" }}>
       <div className="container py-24">
         <div className="grid md:grid-cols-2 gap-16 items-center">
-          {/* Left: image */}
+          {/* Left: image — Lead to Close with AI bridging the gap */}
           <div className="relative reveal order-2 md:order-1">
             <img
-              src={ABOUT_BG}
-              alt="RebelWave team reviewing campaign analytics"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/rw-lead-to-close-b9vv2JiUF4Mw7GVgU3KyJy.webp"
+              alt="From Lead to Close — AI bridges the gap"
               className="w-full object-cover"
               style={{ aspectRatio: "4/3" }}
             />
@@ -711,45 +768,47 @@ function AboutSection() {
 
 // ── VSL Section ───────────────────────────────────────────────────────────────
 function VSLSection() {
+  // VIDEO_URL: replace the src below with your actual video embed URL when ready
+  // For YouTube: use https://www.youtube.com/embed/VIDEO_ID
+  // For Vimeo: use https://player.vimeo.com/video/VIDEO_ID
+  const VIDEO_URL = ""; // placeholder — paste your embed URL here
+
   return (
     <section id="vsl" style={{ background: "#FFFFFF" }}>
       <div className="container py-24">
-        <div className="text-center max-w-xl mx-auto mb-12 reveal">
-          <p className="section-eyebrow mb-3">See It In Action</p>
-          <h2
-            className="text-3xl md:text-4xl font-bold"
-            style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
-          >
-            Watch How We Build Your Growth System
-          </h2>
-        </div>
-
         <div className="max-w-3xl mx-auto reveal">
           <div
-            className="relative aspect-video flex items-center justify-center"
-            style={{ background: "#F0F4F8", border: "1px solid #E2E8F0" }}
+            className="relative w-full overflow-hidden"
+            style={{ aspectRatio: "16/9", background: "#0D1B2A" }}
           >
-            <div className="text-center">
-              <div
-                className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer transition-all hover:scale-105"
-                style={{ background: "#C9A84C" }}
-              >
-                <Play size={24} style={{ color: "#0D1B2A", marginLeft: 3 }} />
+            {VIDEO_URL ? (
+              <iframe
+                src={VIDEO_URL}
+                title="RebelWave — See How We Work"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+                style={{ border: "none" }}
+              />
+            ) : (
+              /* Placeholder shown until video is uploaded */
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <div
+                    className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+                    style={{ background: "rgba(201,168,76,0.15)", border: "2px solid rgba(201,168,76,0.3)" }}
+                  >
+                    <Play size={24} style={{ color: "#C9A84C", marginLeft: 3 }} />
+                  </div>
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Montserrat', sans-serif" }}
+                  >
+                    Video coming soon
+                  </p>
+                </div>
               </div>
-              <p
-                className="text-sm font-medium"
-                style={{ color: "#9CA3AF", fontFamily: "'Montserrat', sans-serif" }}
-              >
-                Video Coming Soon
-              </p>
-            </div>
-          </div>
-
-          <div className="text-center mt-8">
-            <a href="#book" className="btn-gold">
-              <span>Ready to Get Started? Book a Call</span>
-              <ArrowRight size={15} />
-            </a>
+            )}
           </div>
         </div>
       </div>
@@ -1195,7 +1254,7 @@ function Footer() {
           <div>
             <div className="section-eyebrow mb-5">Contact</div>
             <div className="space-y-3 text-sm" style={{ color: "rgba(255,255,255,0.35)", fontFamily: "'DM Sans', sans-serif" }}>
-              <div>Montreal, Quebec, Canada</div>
+              {/* Location removed per user request */}
               <div>
                 <a
                   href="tel:5146512426"
