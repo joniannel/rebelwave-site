@@ -261,15 +261,15 @@ function SocialProofBar() {
 
 // ── Client Logos ─────────────────────────────────────────────────────────────
 function ClientLogosSection() {
-  const clients = [
-    "Mr. Montreal Photobooth",
-    "Le Petit Duck Shoppe",
-    "Wild Magnolia Events",
-    "Momentum Media",
-    "Artisan Co.",
-    "Northside Roofing",
-    "Elite Home Services",
-    "Prestige Renovations",
+  const logos = [
+    { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/azeala-logo_df93f08e.png", alt: "Azeala" },
+    { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/le-petit-duck-shoppe-white_7ac6900d.png", alt: "Le Petit Duck Shoppe" },
+    { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/WildMagnolia_b84b1bc6.png", alt: "Wild Magnolia" },
+    { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/A-word-for-today_34aae598.webp", alt: "A Word For Today" },
+    { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/Khiels-logo_9ad61d11.webp", alt: "Kheils" },
+    { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/mr.montreal-photobooth_4440da5a.webp", alt: "Mr. Montreal Photobooth" },
+    { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/highspirelogo_c3a38123.png", alt: "Highspire Renovation" },
+    { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/lexsonlogo2(1)_16103952.png", alt: "Lexson AI" },
   ];
 
   return (
@@ -281,15 +281,17 @@ function ClientLogosSection() {
         >
           Trusted by businesses across Canada & the US
         </p>
-        <div className="flex flex-wrap justify-center gap-x-10 gap-y-4">
-          {clients.map((client, i) => (
-            <span
+        <div className="flex flex-wrap justify-center gap-x-8 gap-y-6 items-center">
+          {logos.map((logo, i) => (
+            <img
               key={i}
-              className="text-sm font-medium"
-              style={{ color: "#CBD5E0", fontFamily: "'Montserrat', sans-serif", letterSpacing: "0.02em" }}
-            >
-              {client}
-            </span>
+              src={logo.src}
+              alt={logo.alt}
+              className="h-12 md:h-14 w-auto object-contain transition-opacity duration-300 hover:opacity-75"
+              style={{
+                filter: "brightness(0) saturate(100%) invert(77%) sepia(36%) saturate(1152%) hue-rotate(3deg) brightness(99%) contrast(98%)",
+              }}
+            />
           ))}
         </div>
       </div>
