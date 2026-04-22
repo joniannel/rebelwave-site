@@ -226,7 +226,7 @@ function SocialProofBar() {
   // Only 2 stats shown (removed "Businesses Served" and "Years" per user request)
   const stats = [
     { value: leads, suffix: "+", label: "Leads Generated for Clients" },
-    { value: 20, suffix: "+", label: "Businesses Served" },
+    { value: 10, suffix: "+", label: "Industries Served" },
     { value: roas, suffix: "x", label: "Average ROAS Delivered" },
   ];
 
@@ -294,7 +294,7 @@ function ClientLogosSection() {
           className="text-center text-xs font-semibold tracking-widest uppercase mb-8"
           style={{ color: "#9CA3AF", fontFamily: "'Montserrat', sans-serif" }}
         >
-          Trusted by businesses across Canada & the US
+          Trusted by businesses across multiple industries
         </p>
         <div className="overflow-hidden">
           <div className="logo-scroll-container flex gap-12 items-center whitespace-nowrap">
@@ -350,9 +350,8 @@ function ServicesSection() {
             A Complete Customer Acquisition System
           </h2>
           <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}>
-            Most agencies run ads and hand you leads. We build the entire system — from
-            the first impression to the booked appointment — and we use AI at every step
-            to move faster and deliver better results.
+            Most agencies run ads and hand you leads. We build the entire system — from the first impression to the booked appointment — <br /><br />
+            Our Goal is always that you only have to get on the final sales call while the rest runs on autopilot.
           </p>
         </div>
 
