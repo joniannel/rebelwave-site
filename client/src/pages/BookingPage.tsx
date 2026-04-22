@@ -158,20 +158,21 @@ export default function BookingPage() {
               style={{
                 background: "rgba(255,255,255,0.03)",
                 border: "1px solid rgba(201,168,76,0.15)",
-                minHeight: 700,
               }}
             >
               <iframe
-                src="https://appointments.rebelwave.ca/"
+                src="https://api.leadconnectorhq.com/widget/booking/a5NDHWK26AY8SAZyxB4h"
                 title="Book a RebelWave Strategy Call"
-                className="w-full"
                 style={{
-                  height: 700,
+                  width: "100%",
                   border: "none",
-                  background: "transparent",
+                  overflow: "hidden",
+                  minHeight: "700px",
                 }}
-                scrolling="yes"
+                scrolling="no"
+                id="a5NDHWK26AY8SAZyxB4h_1776884621048"
               />
+              <script src="https://link.msgsndr.com/js/form_embed.js" type="text/javascript" />
             </div>
 
             <p
