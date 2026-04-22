@@ -74,7 +74,7 @@ function Navbar() {
       <div className="container flex items-center justify-between py-5">
         <a href="#" className="flex items-center">
           {/* Logo — will be updated once hi-res file is provided */}
-          <img src={LOGO_URL} alt="RebelWave" className="h-9 w-auto" />
+          <img src={LOGO_URL} alt="RebelWAVE" className="h-9 w-auto" />
         </a>
 
         <div className="hidden md:flex items-center gap-8">
@@ -743,7 +743,7 @@ function AboutSection() {
               <span style={{ color: "#C9A84C" }}>Powered by AI.</span>
             </h2>
             <p className="mb-5" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
-              RebelWave was founded with a clear focus: help service-based businesses
+              RebelWAVE was founded with a clear focus: help service-based businesses
               acquire customers through online marketing. We are not a generalist agency
               — we specialize in lead generation, and we have refined our process to
               deliver consistent, measurable results.
@@ -784,7 +784,7 @@ function VSLSection() {
             {VIDEO_URL ? (
               <iframe
                 src={VIDEO_URL}
-                title="RebelWave — See How We Work"
+                title="RebelWAVE — See How We Work"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="absolute inset-0 w-full h-full"
@@ -916,13 +916,13 @@ function TestimonialsSection() {
       name: "Client Name",
       company: "Home Services Business",
       quote:
-        "RebelWave changed how we get leads entirely. Within 60 days we had more booked jobs than we could handle. The system they built just works, and the team is genuinely invested in your success.",
+        "RebelWAVE changed how we get leads entirely. Within 60 days we had more booked jobs than we could handle. The system they built just works, and the team is genuinely invested in your success.",
     },
     {
       name: "Client Name",
       company: "Renovation Company",
       quote:
-        "I've worked with three agencies before RebelWave. None of them came close. They actually understand the full picture — not just ads, but the whole funnel from click to close.",
+        "I've worked with three agencies before RebelWAVE. None of them came close. They actually understand the full picture — not just ads, but the whole funnel from click to close.",
     },
     {
       name: "Client Name",
@@ -1054,7 +1054,7 @@ function BookingSection() {
             <p className="mb-8" style={{ color: "rgba(255,255,255,0.55)", lineHeight: 1.8 }}>
               Book a free 30-minute strategy call. We'll take a look at your current
               marketing, identify where the biggest opportunities are, and walk you
-              through what a RebelWave system would look like for your business.
+              through what a RebelWAVE system would look like for your business.
             </p>
 
             <div className="space-y-3 mb-10">
@@ -1208,7 +1208,7 @@ function Footer() {
       <div className="container py-16">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div className="md:col-span-2">
-            <img src={LOGO_URL} alt="RebelWave" className="h-9 w-auto mb-5" />
+            <img src={LOGO_URL} alt="RebelWAVE" className="h-9 w-auto mb-5" />
             <p
               className="text-sm mb-6"
               style={{ color: "rgba(255,255,255,0.35)", lineHeight: 1.8, maxWidth: 300 }}
@@ -1283,7 +1283,7 @@ function Footer() {
           className="flex flex-col md:flex-row items-center justify-between pt-8 text-xs"
           style={{ borderTop: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.2)", fontFamily: "'DM Sans', sans-serif" }}
         >
-          <span>© 2024 RebelWave Digital Marketing. All rights reserved.</span>
+          <span>© 2024 RebelWAVE Digital Marketing. All rights reserved.</span>
           <span className="mt-2 md:mt-0">Montreal, QC · Canada</span>
         </div>
       </div>

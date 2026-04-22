@@ -74,7 +74,7 @@ export default function BookingPage() {
       >
         <div className="container flex items-center justify-between">
           <Link href="/">
-            <img src={LOGO_URL} alt="RebelWave" className="h-9 w-auto" />
+            <img src={LOGO_URL} alt="RebelWAVE" className="h-9 w-auto" />
           </Link>
           <Link
             href="/"
@@ -98,7 +98,7 @@ export default function BookingPage() {
             style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF", lineHeight: 1.2 }}
           >
             Book Your
-            <span style={{ color: "#C9A84C" }}> RebelWave Call</span>
+            <span style={{ color: "#C9A84C" }}> RebelWAVE Call</span>
           </h1>
           <p
             className="text-base max-w-lg mx-auto"
@@ -124,7 +124,7 @@ export default function BookingPage() {
               }}
             >
               <div className="mb-8">
-                <p className="section-eyebrow mb-2">RebelWave</p>
+                <p className="section-eyebrow mb-2">RebelWAVE</p>
                 <h2
                   className="text-xl font-bold mb-4"
                   style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF" }}
@@ -197,7 +197,7 @@ export default function BookingPage() {
               <iframe
                 ref={iframeRef}
                 src={`https://api.leadconnectorhq.com/widget/booking/${GHL_CALENDAR_ID}`}
-                title="Book a RebelWave Strategy Call"
+                title="Book a RebelWAVE Strategy Call"
                 id={`${GHL_CALENDAR_ID}_1776884621048`}
                 style={{
                   width: "100%",
@@ -214,7 +214,7 @@ export default function BookingPage() {
               className="text-xs text-center mt-4"
               style={{ color: "rgba(255,255,255,0.15)", fontFamily: "'DM Sans', sans-serif" }}
             >
-              Powered by RebelWave · Secure booking
+              Powered by RebelWAVE · Secure booking
             </p>
           </div>
 
@@ -230,7 +230,7 @@ export default function BookingPage() {
           className="container flex flex-col md:flex-row items-center justify-between text-xs"
           style={{ color: "rgba(255,255,255,0.2)", fontFamily: "'DM Sans', sans-serif" }}
         >
-          <span>© 2024 RebelWave Digital Marketing</span>
+          <span>© 2024 RebelWAVE Digital Marketing</span>
           <span>Montreal, QC · Canada · 514-651-2426</span>
         </div>
       </div>
