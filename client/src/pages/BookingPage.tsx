@@ -73,11 +73,11 @@ export default function BookingPage() {
 
       {/* Main content */}
       <div className="container py-16">
-        <div className="grid md:grid-cols-5 gap-12 items-start">
+        <div className="grid md:grid-cols-5 gap-8 md:gap-12 items-start">
           {/* Left: info panel */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 col-span-1 order-2 md:order-1">
             <div
-              className="p-8 sticky top-24"
+              className="p-6 md:p-8 sticky top-24"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
@@ -152,12 +152,13 @@ export default function BookingPage() {
           </div>
 
           {/* Right: GHL Calendar embed */}
-          <div className="md:col-span-3">
+          <div className="md:col-span-3 col-span-1">
             <div
-              className="relative overflow-hidden"
+              className="relative w-full overflow-x-hidden"
               style={{
                 background: "rgba(255,255,255,0.03)",
                 border: "1px solid rgba(201,168,76,0.15)",
+                minHeight: "500px",
               }}
             >
               <iframe
@@ -167,7 +168,8 @@ export default function BookingPage() {
                   width: "100%",
                   border: "none",
                   overflow: "hidden",
-                  minHeight: "700px",
+                  minHeight: "500px",
+                  display: "block",
                 }}
                 scrolling="no"
                 id="a5NDHWK26AY8SAZyxB4h_1776884621048"
