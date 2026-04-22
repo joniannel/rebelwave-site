@@ -272,8 +272,23 @@ function ClientLogosSection() {
     { src: "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/lexsonlogo2(1)_16103952.png", alt: "Lexson AI" },
   ];
 
+  // Duplicate logos for seamless loop
+  const duplicatedLogos = [...logos, ...logos];
+
   return (
     <section style={{ background: "#FFFFFF", borderBottom: "1px solid #E8ECF0" }}>
+      <style>{`
+        @keyframes scroll-logos {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .logo-scroll-container {
+          animation: scroll-logos 30s linear infinite;
+        }
+        .logo-scroll-container:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
       <div className="container py-12">
         <p
           className="text-center text-xs font-semibold tracking-widest uppercase mb-8"
@@ -281,18 +296,17 @@ function ClientLogosSection() {
         >
           Trusted by businesses across Canada & the US
         </p>
-        <div className="flex flex-wrap justify-center gap-x-8 gap-y-6 items-center">
-          {logos.map((logo, i) => (
-            <img
-              key={i}
-              src={logo.src}
-              alt={logo.alt}
-              className="h-12 md:h-14 w-auto object-contain transition-opacity duration-300 hover:opacity-75"
-              style={{
-                filter: "brightness(0) saturate(100%) invert(77%) sepia(36%) saturate(1152%) hue-rotate(3deg) brightness(99%) contrast(98%)",
-              }}
-            />
-          ))}
+        <div className="overflow-hidden">
+          <div className="logo-scroll-container flex gap-12 items-center whitespace-nowrap">
+            {duplicatedLogos.map((logo, i) => (
+              <img
+                key={i}
+                src={logo.src}
+                alt={logo.alt}
+                className="h-12 md:h-14 w-auto object-contain flex-shrink-0 transition-opacity duration-300 hover:opacity-75"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
