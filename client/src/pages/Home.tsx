@@ -276,7 +276,7 @@ function ClientLogosSection() {
   const duplicatedLogos = [...logos, ...logos];
 
   return (
-    <section style={{ background: "#FFFFFF", borderBottom: "1px solid #E8ECF0" }}>
+    <section style={{ background: "#0e1b29", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
       <style>{`
         @keyframes scroll-logos {
           0% { transform: translateX(0); }
@@ -292,7 +292,7 @@ function ClientLogosSection() {
       <div className="container py-12">
         <p
           className="text-center text-xs font-semibold tracking-widest uppercase mb-8"
-          style={{ color: "#9CA3AF", fontFamily: "'Montserrat', sans-serif" }}
+          style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Montserrat', sans-serif", fontSize: '14px' }}
         >
           Trusted by businesses across multiple industries
         </p>
@@ -644,233 +644,217 @@ function AcquisitionEngineSection() {
           </p>
         </div>
 
-        {/* Desktop SVG diagram */}
-        <div className="hidden md:block w-full reveal" style={{ maxWidth: 1100, margin: "0 auto" }}>
+        {/* Desktop SVG diagram — matches uploaded reference exactly */}
+        {/*
+          Layout (viewBox 1200 x 600):
+          Lead:        x=20,   y=210, w=170, h=80   — centre y=250
+          Fork point:  x=190+20=210 (right edge of Lead), y=250
+          Direct:      x=280,  y=60,  w=210, h=120  — centre y=120
+          AI Agent:    x=280,  y=310, w=210, h=140  — centre y=380
+          Nurture:     x=580,  y=350, w=230, h=100  — centre y=400
+          Booked:      x=840,  y=210, w=190, h=80   — centre y=250
+          Close:       x=1060, y=210, w=130, h=80   — centre y=250
+          Brackets:    y=490 → 560
+
+          Line trajectories (matching diagram exactly):
+          1. Lead right edge (190,250) → fork (220,250)  horizontal
+          2. Fork (220,250) → up to (220,120) → right to Direct left (280,120)  right-angle elbow
+          3. Fork (220,250) → down to (220,380) → right to AI Agent left (280,380)  right-angle elbow
+          4. Direct right (490,120) → right to (840,120) → down to Booked top (840,210)  right-angle elbow
+          5. AI Agent right (490,380) → right to (840,380) → up to Booked bottom (840,290)  right-angle elbow
+          6. AI Agent bottom-centre (385,450) → down to (385,470) → right to (580,470) → up to Nurture left-centre (580,400)  right-angle elbow
+          7. Nurture right (810,400) → right to (840,400) → up to Booked bottom (840,290)  (merges with #5 path)
+          8. Booked right (1030,250) → right to Close left (1060,250)  horizontal
+        */}
+        <div className="hidden md:block w-full reveal" style={{ maxWidth: 1200, margin: "0 auto" }}>
           <svg
-            viewBox="0 0 1100 570"
+            viewBox="0 0 1200 600"
             preserveAspectRatio="xMidYMid meet"
             style={{ width: "100%", height: "auto", overflow: "visible" }}
           >
-            {/* ─── LINES ─── */}
-
-            {/* Lead → fork (x=170) */}
-            <line x1="170" y1="240" x2="230" y2="240"
-              stroke="rgba(255,255,255,0.35)" strokeWidth="2"
-              style={dash(s >= 2, 60)}
-            />
-            {/* fork → Direct (elbow: right then up) */}
-            <polyline points="230,240 230,115 250,115"
-              fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2"
-              style={dash(s >= 2, 185)}
-            />
-            {/* fork → AI Agent (elbow: right then down) */}
-            <polyline points="230,240 230,365 250,365"
-              fill="none" stroke="rgba(201,168,76,0.6)" strokeWidth="2"
-              style={dash(s >= 2, 185)}
+            {/* ─── LINE 1: Lead → fork ─── */}
+            <line x1="190" y1="250" x2="220" y2="250"
+              fill="none" stroke="rgba(180,190,200,0.5)" strokeWidth="2"
+              style={dash(s >= 2, 30)}
             />
 
-            {/* Direct → Booked (elbow: right then down) */}
-            <polyline points="450,115 760,115 760,200"
-              fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="2"
-              style={dash(s >= 5, 460)}
+            {/* ─── LINE 2: fork → Direct (right-angle: up then right) ─── */}
+            <polyline points="220,250 220,120 280,120"
+              fill="none" stroke="rgba(180,190,200,0.5)" strokeWidth="2"
+              style={dash(s >= 2, 200)}
+            />
+            {s >= 2 && <polygon points="280,114 270,120 280,126" fill="rgba(180,190,200,0.5)" />}
+
+            {/* ─── LINE 3: fork → AI Agent (right-angle: down then right) ─── */}
+            <polyline points="220,250 220,380 280,380"
+              fill="none" stroke="rgba(180,190,200,0.5)" strokeWidth="2"
+              style={dash(s >= 2, 200)}
+            />
+            {s >= 2 && <polygon points="280,374 270,380 280,386" fill="rgba(180,190,200,0.5)" />}
+
+            {/* ─── LINE 4: Direct → Booked (right then down) ─── */}
+            <polyline points="490,120 840,120 840,210"
+              fill="none" stroke="rgba(180,190,200,0.5)" strokeWidth="2"
+              style={dash(s >= 5, 520)}
+            />
+            {s >= 5 && <polygon points="834,210 840,200 846,210" fill="rgba(180,190,200,0.5)" />}
+
+            {/* ─── LINE 5: AI Agent → Booked (right then up) ─── */}
+            <polyline points="490,380 840,380 840,290"
+              fill="none" stroke="rgba(180,190,200,0.5)" strokeWidth="2"
+              style={dash(s >= 6, 520)}
+            />
+            {s >= 6 && <polygon points="834,290 840,300 846,290" fill="rgba(180,190,200,0.5)" />}
+
+            {/* ─── LINE 6: AI Agent → Nurture (down then right then up) ─── */}
+            <polyline points="385,450 385,475 580,475 580,450"
+              fill="none" stroke="rgba(180,190,200,0.45)" strokeWidth="2"
+              style={dash(s >= 7, 370)}
+            />
+            {s >= 7 && <polygon points="574,450 580,460 586,450" fill="rgba(180,190,200,0.45)" />}
+
+            {/* ─── LINE 7: Nurture → Booked (right then up) ─── */}
+            <polyline points="810,400 840,400 840,290"
+              fill="none" stroke="rgba(180,190,200,0.45)" strokeWidth="2"
+              style={dash(s >= 9, 140)}
             />
 
-            {/* AI Agent → Booked (elbow: right then up) */}
-            <polyline points="450,365 760,365 760,280"
-              fill="none" stroke="rgba(201,168,76,0.6)" strokeWidth="2"
-              style={dash(s >= 6, 460)}
+            {/* ─── LINE 8: Booked → Close ─── */}
+            <line x1="1030" y1="250" x2="1060" y2="250"
+              fill="none" stroke="rgba(180,190,200,0.5)" strokeWidth="2"
+              style={dash(s >= 11, 30)}
             />
+            {s >= 11 && <polygon points="1060,244 1050,250 1060,256" fill="rgba(180,190,200,0.5)" />}
 
-            {/* AI Agent → Nurture */}
-            <polyline points="350,430 350,460 530,460 530,405"
-              fill="none" stroke="rgba(201,168,76,0.45)" strokeWidth="2"
-              style={dash(s >= 7, 320)}
-            />
-
-            {/* Nurture → Booked (up arrow) */}
-            <polyline points="740,405 740,240 760,240"
-              fill="none" stroke="rgba(201,168,76,0.45)" strokeWidth="2"
-              style={dash(s >= 9, 185)}
-            />
-
-            {/* Booked → Close */}
-            <line x1="940" y1="240" x2="980" y2="240"
-              stroke="rgba(255,255,255,0.35)" strokeWidth="2"
-              style={dash(s >= 11, 40)}
-            />
-
-            {/* ─── ARROWHEADS ─── */}
-            {s >= 2 && <polygon points="250,109 244,119 256,119" fill="rgba(255,255,255,0.35)" />}
-            {s >= 2 && <polygon points="250,371 244,361 256,361" fill="rgba(201,168,76,0.6)" />}
-            {s >= 5 && <polygon points="766,200 754,194 754,206" fill="rgba(255,255,255,0.35)" />}
-            {s >= 6 && <polygon points="766,280 754,274 754,286" fill="rgba(201,168,76,0.6)" />}
-            {s >= 9 && <polygon points="766,240 754,234 754,246" fill="rgba(201,168,76,0.45)" />}
-            {s >= 11 && <polygon points="980,246 970,240 980,234" fill="rgba(255,255,255,0.35)" />}
-
-            {/* ─── NODE: Lead Comes In ─── */}
+            {/* ─── NODE: Lead Comes in Through Meta Ad ─── */}
             <g style={nodeAnim(s >= 1)}>
-              <rect x="10" y="200" width="160" height="80" rx="12"
+              <rect x="20" y="210" width="170" height="80" rx="12"
                 fill="#0D1B2A" stroke="rgba(255,255,255,0.25)" strokeWidth="2"
               />
-              <text x="90" y="233" textAnchor="middle"
+              <text x="105" y="244" textAnchor="middle"
                 fill="#FFFFFF" fontSize="13" fontFamily="Montserrat,sans-serif" fontWeight="700"
               >Lead Comes in</text>
-              <text x="90" y="252" textAnchor="middle"
+              <text x="105" y="264" textAnchor="middle"
                 fill="#FFFFFF" fontSize="13" fontFamily="Montserrat,sans-serif" fontWeight="700"
               >Through Meta Ad</text>
             </g>
 
             {/* ─── NODE: Direct ─── */}
             <g style={nodeAnim(s >= 3)}>
-              <rect x="250" y="60" width="200" height="110" rx="12"
-                fill="rgba(201,168,76,0.1)" stroke="#C9A84C" strokeWidth="2"
+              {/* outer border */}
+              <rect x="280" y="60" width="210" height="120" rx="12"
+                fill="rgba(201,168,76,0.08)" stroke="#C9A84C" strokeWidth="2"
               />
-              {/* inner gold border inset */}
-              <rect x="258" y="100" width="184" height="62" rx="8"
-                fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.5)" strokeWidth="1"
+              {/* inner inset box */}
+              <rect x="290" y="95" width="190" height="76" rx="8"
+                fill="rgba(201,168,76,0.06)" stroke="rgba(201,168,76,0.45)" strokeWidth="1.2"
               />
-              <text x="350" y="90" textAnchor="middle"
+              <text x="385" y="86" textAnchor="middle"
                 fill="#C9A84C" fontSize="14" fontFamily="Montserrat,sans-serif" fontWeight="800"
               >Direct</text>
-              <text x="350" y="120" textAnchor="middle"
-                fill="rgba(255,255,255,0.7)" fontSize="11" fontFamily="DM Sans,sans-serif"
+              <text x="385" y="116" textAnchor="middle"
+                fill="rgba(255,255,255,0.75)" fontSize="12" fontFamily="DM Sans,sans-serif"
               >Online Booking process</text>
-              <text x="350" y="138" textAnchor="middle"
-                fill="rgba(255,255,255,0.55)" fontSize="10.5" fontFamily="DM Sans,sans-serif"
+              <text x="385" y="136" textAnchor="middle"
+                fill="rgba(255,255,255,0.6)" fontSize="11.5" fontFamily="DM Sans,sans-serif"
               >11 step Lead Nurture</text>
-              <text x="350" y="154" textAnchor="middle"
-                fill="rgba(255,255,255,0.55)" fontSize="10.5" fontFamily="DM Sans,sans-serif"
+              <text x="385" y="154" textAnchor="middle"
+                fill="rgba(255,255,255,0.6)" fontSize="11.5" fontFamily="DM Sans,sans-serif"
               >sequence</text>
             </g>
 
             {/* ─── NODE: AI Agent ─── */}
             <g style={nodeAnim(s >= 4)}>
-              <rect x="250" y="300" width="200" height="130" rx="12"
-                fill="rgba(201,168,76,0.12)" stroke="#C9A84C" strokeWidth="2"
+              <rect x="280" y="310" width="210" height="140" rx="12"
+                fill="rgba(201,168,76,0.08)" stroke="#C9A84C" strokeWidth="2"
               />
-              <rect x="258" y="330" width="184" height="92" rx="8"
-                fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.5)" strokeWidth="1"
+              <rect x="290" y="345" width="190" height="96" rx="8"
+                fill="rgba(201,168,76,0.06)" stroke="rgba(201,168,76,0.45)" strokeWidth="1.2"
               />
-              <text x="350" y="322" textAnchor="middle"
+              <text x="385" y="336" textAnchor="middle"
                 fill="#C9A84C" fontSize="14" fontFamily="Montserrat,sans-serif" fontWeight="800"
               >AI Agent</text>
-              <text x="350" y="348" textAnchor="middle"
-                fill="rgba(255,255,255,0.7)" fontSize="11" fontFamily="DM Sans,sans-serif"
+              <text x="385" y="364" textAnchor="middle"
+                fill="rgba(255,255,255,0.75)" fontSize="12" fontFamily="DM Sans,sans-serif"
               >Booking Process</text>
-              <text x="350" y="366" textAnchor="middle"
-                fill="rgba(255,255,255,0.55)" fontSize="10.5" fontFamily="DM Sans,sans-serif"
+              <text x="385" y="383" textAnchor="middle"
+                fill="rgba(255,255,255,0.6)" fontSize="11.5" fontFamily="DM Sans,sans-serif"
               >Includes 7 step Lead</text>
-              <text x="350" y="382" textAnchor="middle"
-                fill="rgba(255,255,255,0.55)" fontSize="10.5" fontFamily="DM Sans,sans-serif"
+              <text x="385" y="401" textAnchor="middle"
+                fill="rgba(255,255,255,0.6)" fontSize="11.5" fontFamily="DM Sans,sans-serif"
               >Follow up and Nurture</text>
-              <text x="350" y="398" textAnchor="middle"
-                fill="rgba(255,255,255,0.55)" fontSize="10.5" fontFamily="DM Sans,sans-serif"
+              <text x="385" y="419" textAnchor="middle"
+                fill="rgba(255,255,255,0.6)" fontSize="11.5" fontFamily="DM Sans,sans-serif"
               >sequence</text>
             </g>
 
-            {/* ─── NODE: 12-Week Nurture ─── */}
+            {/* ─── NODE: 12 Week Nurture ─── */}
             <g style={nodeAnim(s >= 8)}>
-              <rect x="530" y="360" width="210" height="90" rx="12"
+              <rect x="580" y="350" width="230" height="100" rx="12"
                 fill="#0D1B2A" stroke="rgba(255,255,255,0.22)" strokeWidth="2"
               />
-              <text x="635" y="393" textAnchor="middle"
-                fill="#FFFFFF" fontSize="12" fontFamily="Montserrat,sans-serif" fontWeight="700"
+              <text x="695" y="385" textAnchor="middle"
+                fill="#FFFFFF" fontSize="12.5" fontFamily="Montserrat,sans-serif" fontWeight="700"
               >12 Week Follow-up and</text>
-              <text x="635" y="411" textAnchor="middle"
-                fill="#FFFFFF" fontSize="12" fontFamily="Montserrat,sans-serif" fontWeight="700"
+              <text x="695" y="404" textAnchor="middle"
+                fill="#FFFFFF" fontSize="12.5" fontFamily="Montserrat,sans-serif" fontWeight="700"
               >nurture to make sure</text>
-              <text x="635" y="429" textAnchor="middle"
-                fill="rgba(255,255,255,0.6)" fontSize="11" fontFamily="DM Sans,sans-serif"
+              <text x="695" y="423" textAnchor="middle"
+                fill="rgba(255,255,255,0.55)" fontSize="11.5" fontFamily="DM Sans,sans-serif"
               >leads stay active</text>
             </g>
 
             {/* ─── NODE: Booked Sales Call ─── */}
             <g style={nodeAnim(s >= 10)}>
-              <rect x="760" y="200" width="180" height="80" rx="12"
+              <rect x="840" y="210" width="190" height="80" rx="12"
                 fill="#0D1B2A" stroke="rgba(255,255,255,0.25)" strokeWidth="2"
               />
-              <text x="850" y="236" textAnchor="middle"
+              <text x="935" y="255" textAnchor="middle"
                 fill="#FFFFFF" fontSize="13" fontFamily="Montserrat,sans-serif" fontWeight="700"
               >Booked Sales Call</text>
             </g>
 
             {/* ─── NODE: Close the Deal ─── */}
             <g style={nodeAnim(s >= 12)}>
-              <rect x="980" y="200" width="110" height="80" rx="12"
+              <rect x="1060" y="210" width="130" height="80" rx="12"
                 fill="rgba(201,168,76,0.15)" stroke="#C9A84C" strokeWidth="2"
               />
-              <text x="1035" y="236" textAnchor="middle"
+              <text x="1125" y="246" textAnchor="middle"
                 fill="#C9A84C" fontSize="13" fontFamily="Montserrat,sans-serif" fontWeight="800"
-              >Close the</text>
-              <text x="1035" y="254" textAnchor="middle"
-                fill="#C9A84C" fontSize="13" fontFamily="Montserrat,sans-serif" fontWeight="800"
-              >deal</text>
+              >Close the deal</text>
             </g>
 
-            {/* ─── AI BRACKET (bottom, pointing down) ─── */}
+            {/* ─── AI BRACKET — bottom, open-top U pointing down ─── */}
             <g style={nodeAnim(s >= 13)}>
-              {/* bracket shape: top-open U pointing down */}
-              <path d="M 10 490 L 10 510 L 940 510 L 940 490"
+              <path d="M 20 500 L 20 520 L 1030 520 L 1030 500"
                 fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round"
               />
-              {/* downward arrow stem */}
-              <line x1="475" y1="510" x2="475" y2="535"
+              <line x1="525" y1="520" x2="525" y2="548"
                 stroke="#C9A84C" strokeWidth="2"
               />
-              {/* arrowhead */}
-              <polygon points="475,545 469,532 481,532" fill="#C9A84C" />
-              <text x="475" y="562" textAnchor="middle"
-                fill="#C9A84C" fontSize="16" fontFamily="Montserrat,sans-serif" fontWeight="800" letterSpacing="5"
+              <polygon points="525,558 519,545 531,545" fill="#C9A84C" />
+              <text x="525" y="578" textAnchor="middle"
+                fill="#C9A84C" fontSize="17" fontFamily="Montserrat,sans-serif" fontWeight="800" letterSpacing="6"
               >AI</text>
             </g>
 
-            {/* ─── YOU BRACKET (bottom, pointing down) ─── */}
+            {/* ─── YOU BRACKET — bottom, open-top U pointing down ─── */}
             <g style={nodeAnim(s >= 14)}>
-              <path d="M 980 490 L 980 510 L 1090 510 L 1090 490"
+              <path d="M 1060 500 L 1060 520 L 1190 520 L 1190 500"
                 fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round"
               />
-              <line x1="1035" y1="510" x2="1035" y2="535"
+              <line x1="1125" y1="520" x2="1125" y2="548"
                 stroke="#C9A84C" strokeWidth="2"
               />
-              <polygon points="1035,545 1029,532 1041,532" fill="#C9A84C" />
-              <text x="1035" y="562" textAnchor="middle"
-                fill="#C9A84C" fontSize="16" fontFamily="Montserrat,sans-serif" fontWeight="800" letterSpacing="5"
+              <polygon points="1125,558 1119,545 1131,545" fill="#C9A84C" />
+              <text x="1125" y="578" textAnchor="middle"
+                fill="#C9A84C" fontSize="17" fontFamily="Montserrat,sans-serif" fontWeight="800" letterSpacing="6"
               >YOU</text>
             </g>
           </svg>
         </div>
 
-        {/* Mobile: vertical stacked */}
-        <div className="md:hidden space-y-3 mt-4">
-          {[
-            { label: "Lead Comes in Through Meta Ad", lines: [], gold: false, vis: s >= 1 },
-            { label: "Direct", lines: ["Online Booking process", "11 step Lead Nurture sequence"], gold: true, vis: s >= 3 },
-            { label: "AI Agent", lines: ["Booking Process", "Includes 7 step Lead Follow up and Nurture sequence"], gold: true, vis: s >= 4 },
-            { label: "12 Week Follow-up and nurture", lines: ["to make sure leads stay active"], gold: false, vis: s >= 8 },
-            { label: "Booked Sales Call", lines: [], gold: false, vis: s >= 10 },
-            { label: "Close the Deal", lines: [], gold: true, vis: s >= 12 },
-          ].map((n, i) => (
-            <div key={i} style={{ opacity: n.vis ? 1 : 0, transform: n.vis ? "translateY(0)" : "translateY(10px)", transition: "all 0.45s ease" }}>
-              <div style={{ background: n.gold ? "rgba(201,168,76,0.1)" : "#0D1B2A", border: `1.5px solid ${n.gold ? "#C9A84C" : "rgba(255,255,255,0.14)"}`, borderRadius: 10, padding: "14px 18px" }}>
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: "0.85rem", color: n.gold ? "#C9A84C" : "#FFFFFF" }}>{n.label}</div>
-                {n.lines.map((line, li) => (
-                  <div key={li} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", marginTop: li === 0 ? 5 : 2 }}>{line}</div>
-                ))}
-              </div>
-              {i < 5 && <div style={{ width: 2, height: 16, background: "rgba(255,255,255,0.15)", margin: "0 auto" }} />}
-            </div>
-          ))}
-          <div style={{ display: "flex", justifyContent: "space-around", marginTop: 24, opacity: s >= 13 ? 1 : 0, transition: "opacity 0.5s" }}>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ width: 80, height: 2, background: "#C9A84C", margin: "0 auto 6px" }} />
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, color: "#C9A84C", fontSize: "1rem", letterSpacing: "0.12em" }}>AI</span>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ width: 80, height: 2, background: "#C9A84C", margin: "0 auto 6px" }} />
-              <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, color: "#C9A84C", fontSize: "1rem", letterSpacing: "0.12em" }}>YOU</span>
-            </div>
-          </div>
-        </div>
+
 
         <div className="mt-16 text-center reveal">
           <a href="#book" className="btn-gold">
