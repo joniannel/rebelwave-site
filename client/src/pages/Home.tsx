@@ -461,68 +461,171 @@ function WhyAgencySection() {
   );
 }
 
-// ── Other Services ────────────────────────────────────────────────────────────
+// ── Lexson AI Partnership Section ─────────────────────────────────────────────
+function LexsonAISection() {
+  const LEXSON_LOGO = "https://d2xsxph8kpxj0f.cloudfront.net/310519663456211792/cMP5DWkEbNMCiSmpR8EfdN/lexsonlogo2(1)_16103952.png";
+
+  return (
+    <section id="voice-ai" style={{ background: "#0D1B2A" }}>
+      <div className="container py-24">
+        {/* Featured full-width dark card */}
+        <div
+          className="relative overflow-hidden reveal"
+          style={{
+            background: "linear-gradient(135deg, #091422 0%, #162435 60%, #0D1B2A 100%)",
+            border: "1.5px solid rgba(201,168,76,0.3)",
+            borderRadius: "4px",
+            padding: "0",
+            boxShadow: "0 8px 48px rgba(0,0,0,0.4), inset 0 0 80px rgba(201,168,76,0.04)",
+          }}
+        >
+          {/* Subtle background glow */}
+          <div
+            className="absolute top-0 right-0 w-96 h-96 pointer-events-none"
+            style={{
+              background: "radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%)",
+              transform: "translate(30%, -30%)",
+            }}
+          />
+
+          <div className="relative z-10 grid md:grid-cols-2 gap-0 items-stretch">
+            {/* Left: content */}
+            <div className="p-10 md:p-14">
+              {/* Partnership badge */}
+              <div
+                className="inline-flex items-center gap-2.5 mb-8"
+                style={{
+                  background: "rgba(201,168,76,0.1)",
+                  border: "1px solid rgba(201,168,76,0.35)",
+                  borderRadius: "2px",
+                  padding: "6px 14px",
+                }}
+              >
+                <img src={LEXSON_LOGO} alt="Lexson AI" className="h-5 w-auto" />
+                <span
+                  className="text-xs font-bold tracking-widest uppercase"
+                  style={{ fontFamily: "'Montserrat', sans-serif", color: "#C9A84C" }}
+                >
+                  Partnership with Lexson AI
+                </span>
+              </div>
+
+              <h2
+                className="text-3xl md:text-4xl font-bold mb-5"
+                style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF", lineHeight: 1.25 }}
+              >
+                AI Voice Agents That
+                <br />
+                <span style={{ color: "#C9A84C" }}>Never Miss a Lead.</span>
+              </h2>
+
+              <p className="mb-8" style={{ color: "rgba(255,255,255,0.55)", lineHeight: 1.8 }}>
+                Through our partnership with Lexson AI, we deploy intelligent voice agents
+                that qualify and book your leads around the clock — no human required.
+                Every lead that comes in gets an immediate, professional response.
+              </p>
+
+              <div className="space-y-4 mb-10">
+                {[
+                  { label: "Calls & qualifies leads 24/7", sub: "Instant response — no lead waits" },
+                  { label: "Books appointments automatically", sub: "Directly into your calendar" },
+                  { label: "Handles objections naturally", sub: "Trained on your offer and FAQs" },
+                  { label: "Escalates hot leads to you", sub: "You only talk to ready buyers" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-3">
+                    <div
+                      className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                      style={{ background: "rgba(201,168,76,0.15)", border: "1px solid rgba(201,168,76,0.4)" }}
+                    >
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                        <path d="M2 5l2.5 2.5L8 3" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div
+                        className="text-sm font-semibold"
+                        style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF" }}
+                      >
+                        {item.label}
+                      </div>
+                      <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                        {item.sub}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <a href="#book" className="btn-gold">
+                <span>Add Voice AI to Your Pipeline</span>
+                <ArrowRight size={15} />
+              </a>
+            </div>
+
+            {/* Right: animated pulse visual */}
+            <div
+              className="hidden md:flex items-center justify-center p-14"
+              style={{ borderLeft: "1px solid rgba(255,255,255,0.06)" }}
+            >
+              <VoicePlayButton />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── AI Acquisition Engine ─────────────────────────────────────────────────────
 function AcquisitionEngineSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [started, setStarted] = useState(false);
   const [step, setStep] = useState(0);
 
+  // Trigger animation when section scrolls into view
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setStarted(true); },
-      { threshold: 0.3 }
+      { threshold: 0.25 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
+  // Step timing: 1=Lead node, 2=line to fork, 3=Direct node, 4=AI Agent node,
+  // 5=line Direct→Booked, 6=line AI→Booked, 7=line AI→Nurture, 8=Nurture node,
+  // 9=line Nurture→Booked, 10=Booked node, 11=line Booked→Close, 12=Close node,
+  // 13=AI bracket, 14=YOU bracket
   useEffect(() => {
     if (!started) return;
-    // Animate steps sequentially: 0=lead, 1=line to split, 2=direct node, 3=ai node, 4=line to booked, 5=booked, 6=follow-up, 7=close
-    const timings = [0, 600, 1100, 1600, 2400, 2900, 3500, 4200];
+    const timings = [0, 600, 1200, 1800, 2500, 2600, 2700, 3200, 3700, 4000, 4600, 5100, 5900, 6400];
     timings.forEach((t, i) => {
       setTimeout(() => setStep(i + 1), t);
     });
   }, [started]);
 
-  const nodeStyle = (visible: boolean, gold = false): React.CSSProperties => ({
-    background: gold ? "rgba(201,168,76,0.12)" : "#0D1B2A",
-    border: `1.5px solid ${gold ? "#C9A84C" : "rgba(255,255,255,0.18)"}`,
-    borderRadius: "10px",
-    padding: "12px 16px",
-    minWidth: 140,
-    textAlign: "center" as const,
-    opacity: visible ? 1 : 0,
-    transform: visible ? "scale(1)" : "scale(0.85)",
-    transition: "opacity 0.45s ease, transform 0.45s ease",
-    boxShadow: gold ? "0 0 18px rgba(201,168,76,0.18)" : "0 2px 16px rgba(0,0,0,0.25)",
-  });
+  // SVG-based fully responsive diagram
+  // Viewbox: 1000 x 420
+  // Nodes (cx, cy, w, h):
+  //   Lead:    x=20,  y=170, w=140, h=60
+  //   Direct:  x=240, y=80,  w=140, h=60
+  //   AIAgent: x=240, y=280, w=140, h=60
+  //   Nurture: x=460, y=340, w=160, h=60  (below AI Agent)
+  //   Booked:  x=680, y=170, w=160, h=60
+  //   Close:   x=840, y=170, w=140, h=60  -- actually x=860
 
-  const labelStyle: React.CSSProperties = {
-    fontFamily: "'Montserrat', sans-serif",
-    fontWeight: 700,
-    fontSize: "0.72rem",
-    color: "#FFFFFF",
-    lineHeight: 1.4,
-  };
+  // We'll use a pure SVG with foreignObject for text and animated paths
+  const s = step;
 
-  const subLabelStyle: React.CSSProperties = {
-    fontFamily: "'DM Sans', sans-serif",
-    fontSize: "0.65rem",
-    color: "rgba(255,255,255,0.55)",
-    lineHeight: 1.5,
-    marginTop: 4,
-  };
-
-  const lineStyle = (visible: boolean, horizontal = true): React.CSSProperties => ({
-    background: "rgba(255,255,255,0.25)",
-    ...(horizontal
-      ? { height: 2, width: visible ? "100%" : "0%", transition: "width 0.5s ease" }
-      : { width: 2, height: visible ? "100%" : "0%", transition: "height 0.5s ease" }),
+  // Dash animation helper: returns strokeDashoffset style
+  const dash = (visible: boolean, len: number) => ({
+    strokeDasharray: len,
+    strokeDashoffset: visible ? 0 : len,
+    transition: "stroke-dashoffset 0.55s ease",
   });
 
   return (
-    <section ref={sectionRef} style={{ background: "#0D1B2A" }}>
+    <section ref={sectionRef} style={{ background: "#162435" }}>
       <div className="container py-24">
         {/* Header */}
         <div className="max-w-xl mb-16 reveal">
@@ -539,121 +642,186 @@ function AcquisitionEngineSection() {
           </p>
         </div>
 
-        {/* Diagram — desktop */}
-        <div className="hidden md:block overflow-x-auto pb-4">
-          <div style={{ minWidth: 900, position: "relative", padding: "20px 0 80px" }}>
+        {/* SVG Diagram — fully responsive, no horizontal scroll */}
+        <div className="w-full reveal" style={{ maxWidth: 960, margin: "0 auto" }}>
+          <svg
+            viewBox="0 0 960 440"
+            preserveAspectRatio="xMidYMid meet"
+            style={{ width: "100%", height: "auto", overflow: "visible" }}
+          >
+            {/* ── Connecting Lines ── */}
 
-            {/* ── Row 1: Lead → split → Direct → Booked → Close ── */}
-            <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 32 }}>
+            {/* Lead → fork point (x=200) */}
+            <line x1="170" y1="200" x2="230" y2="200"
+              stroke="rgba(255,255,255,0.3)" strokeWidth="2"
+              style={dash(s >= 2, 60)}
+            />
 
-              {/* Node: Lead Comes In */}
-              <div style={nodeStyle(step >= 1)}>
-                <div style={labelStyle}>Lead Comes in<br />Through Meta Ad</div>
-              </div>
+            {/* Fork → Direct (diagonal up) */}
+            <line x1="230" y1="200" x2="290" y2="110"
+              stroke="rgba(255,255,255,0.3)" strokeWidth="2"
+              style={dash(s >= 2, 105)}
+            />
 
-              {/* Line to fork */}
-              <div style={{ flex: "0 0 60px", display: "flex", alignItems: "center" }}>
-                <div style={lineStyle(step >= 2)} />
-              </div>
+            {/* Fork → AI Agent (diagonal down) */}
+            <line x1="230" y1="200" x2="290" y2="310"
+              stroke="rgba(201,168,76,0.5)" strokeWidth="2"
+              style={dash(s >= 2, 125)}
+            />
 
-              {/* Fork column */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 0 }}>
+            {/* Direct → Booked */}
+            <line x1="430" y1="110" x2="660" y2="200"
+              stroke="rgba(255,255,255,0.3)" strokeWidth="2"
+              style={dash(s >= 5, 260)}
+            />
 
-                {/* Top branch: Direct */}
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  {/* Arrow up-right */}
-                  <div style={{ width: 60, height: 2, background: step >= 2 ? "rgba(255,255,255,0.25)" : "transparent", transition: "background 0.4s", marginTop: -40 }} />
-                  <div style={{ ...nodeStyle(step >= 2, true), marginTop: -40 }}>
-                    <div style={{ ...labelStyle, color: "#C9A84C" }}>Direct</div>
-                    <div style={subLabelStyle}>Online Booking process</div>
-                    <div style={{ ...subLabelStyle, color: "rgba(201,168,76,0.8)", marginTop: 6, fontWeight: 600 }}>11 step Lead Nurture<br />sequence</div>
-                  </div>
-                </div>
+            {/* AI Agent → Booked */}
+            <line x1="430" y1="310" x2="660" y2="200"
+              stroke="rgba(201,168,76,0.5)" strokeWidth="2"
+              style={dash(s >= 6, 260)}
+            />
 
-                {/* Spacer */}
-                <div style={{ height: 16 }} />
+            {/* AI Agent → Nurture (down) */}
+            <line x1="360" y1="340" x2="450" y2="370"
+              stroke="rgba(201,168,76,0.4)" strokeWidth="2"
+              style={dash(s >= 7, 100)}
+            />
 
-                {/* Bottom branch: AI Agent */}
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <div style={{ width: 60, height: 2, background: step >= 3 ? "rgba(255,255,255,0.25)" : "transparent", transition: "background 0.4s", marginTop: 40 }} />
-                  <div style={{ ...nodeStyle(step >= 3, true), marginTop: 40 }}>
-                    <div style={{ ...labelStyle, color: "#C9A84C" }}>AI Agent</div>
-                    <div style={subLabelStyle}>Booking Process</div>
-                    <div style={{ ...subLabelStyle, color: "rgba(201,168,76,0.8)", marginTop: 6, fontWeight: 600 }}>Includes 7 step Lead<br />Follow up and Nurture<br />sequence</div>
-                  </div>
-                </div>
-              </div>
+            {/* Nurture → Booked */}
+            <line x1="610" y1="370" x2="660" y2="220"
+              stroke="rgba(201,168,76,0.4)" strokeWidth="2"
+              style={dash(s >= 9, 165)}
+            />
 
-              {/* Converging lines to Booked */}
-              <div style={{ flex: "0 0 80px", display: "flex", alignItems: "center" }}>
-                <div style={lineStyle(step >= 4)} />
-              </div>
+            {/* Booked → Close */}
+            <line x1="820" y1="200" x2="860" y2="200"
+              stroke="rgba(255,255,255,0.3)" strokeWidth="2"
+              style={dash(s >= 11, 40)}
+            />
 
-              {/* Node: Booked Sales Call */}
-              <div style={nodeStyle(step >= 5)}>
-                <div style={labelStyle}>Booked Sales Call</div>
-              </div>
+            {/* ── Nodes ── */}
 
-              {/* Line to Close */}
-              <div style={{ flex: "0 0 60px", display: "flex", alignItems: "center" }}>
-                <div style={lineStyle(step >= 7)} />
-              </div>
+            {/* Node: Lead Comes In */}
+            <g style={{ opacity: s >= 1 ? 1 : 0, transition: "opacity 0.45s ease" }}>
+              <rect x="20" y="170" width="150" height="60" rx="8"
+                fill="#0D1B2A" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"
+              />
+              <text x="95" y="196" textAnchor="middle"
+                fill="#FFFFFF" fontSize="11" fontFamily="Montserrat, sans-serif" fontWeight="700"
+              >Lead Comes In</text>
+              <text x="95" y="213" textAnchor="middle"
+                fill="rgba(255,255,255,0.45)" fontSize="9.5" fontFamily="DM Sans, sans-serif"
+              >Through Meta Ad</text>
+            </g>
 
-              {/* Node: Close the Deal */}
-              <div style={nodeStyle(step >= 8 || step >= 7)}>
-                <div style={labelStyle}>Close the Deal</div>
-              </div>
-            </div>
+            {/* Node: Direct */}
+            <g style={{ opacity: s >= 3 ? 1 : 0, transition: "opacity 0.45s ease" }}>
+              <rect x="290" y="80" width="140" height="60" rx="8"
+                fill="rgba(201,168,76,0.1)" stroke="#C9A84C" strokeWidth="1.5"
+              />
+              <text x="360" y="106" textAnchor="middle"
+                fill="#C9A84C" fontSize="11" fontFamily="Montserrat, sans-serif" fontWeight="700"
+              >Direct</text>
+              <text x="360" y="123" textAnchor="middle"
+                fill="rgba(255,255,255,0.45)" fontSize="9" fontFamily="DM Sans, sans-serif"
+              >Online Booking Process</text>
+            </g>
 
-            {/* ── Row 2: 12-week follow-up loop ── */}
-            <div style={{ display: "flex", alignItems: "flex-start", paddingLeft: 340, marginTop: -20 }}>
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0 }}>
-                <div style={{ height: 40, width: 2, background: step >= 6 ? "rgba(255,255,255,0.25)" : "transparent", transition: "background 0.5s" }} />
-                <div style={{ ...nodeStyle(step >= 6), maxWidth: 180 }}>
-                  <div style={subLabelStyle}>12 Week Follow-up and nurture to make sure leads stay active</div>
-                </div>
-                {/* Arrow back up to Booked */}
-                <div style={{ height: 24, width: 2, background: step >= 6 ? "rgba(255,255,255,0.25)" : "transparent", transition: "background 0.5s" }} />
-              </div>
-            </div>
+            {/* Node: AI Agent */}
+            <g style={{ opacity: s >= 4 ? 1 : 0, transition: "opacity 0.45s ease" }}>
+              <rect x="290" y="280" width="140" height="60" rx="8"
+                fill="rgba(201,168,76,0.12)" stroke="#C9A84C" strokeWidth="1.5"
+              />
+              <text x="360" y="306" textAnchor="middle"
+                fill="#C9A84C" fontSize="11" fontFamily="Montserrat, sans-serif" fontWeight="700"
+              >AI Agent</text>
+              <text x="360" y="323" textAnchor="middle"
+                fill="rgba(255,255,255,0.45)" fontSize="9" fontFamily="DM Sans, sans-serif"
+              >Booking Process</text>
+            </g>
 
-            {/* ── AI / YOU labels ── */}
-            <div style={{ display: "flex", marginTop: 32, gap: 0 }}>
-              {/* AI bracket */}
-              <div style={{ flex: "0 0 72%", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ width: "90%", height: 2, borderBottom: "2px solid #C9A84C", borderLeft: "2px solid #C9A84C", borderRight: "2px solid #C9A84C", borderRadius: "0 0 6px 6px", marginBottom: 8, opacity: step >= 4 ? 1 : 0, transition: "opacity 0.5s" }} />
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#C9A84C", letterSpacing: "0.1em", opacity: step >= 4 ? 1 : 0, transition: "opacity 0.5s" }}>AI</div>
-              </div>
-              {/* YOU bracket */}
-              <div style={{ flex: "0 0 28%", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <div style={{ width: "80%", height: 2, borderBottom: "2px solid #C9A84C", borderLeft: "2px solid #C9A84C", borderRight: "2px solid #C9A84C", borderRadius: "0 0 6px 6px", marginBottom: 8, opacity: step >= 7 ? 1 : 0, transition: "opacity 0.5s" }} />
-                <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#C9A84C", letterSpacing: "0.1em", opacity: step >= 7 ? 1 : 0, transition: "opacity 0.5s" }}>YOU</div>
-              </div>
-            </div>
-          </div>
+            {/* Node: 12-Week Nurture */}
+            <g style={{ opacity: s >= 8 ? 1 : 0, transition: "opacity 0.45s ease" }}>
+              <rect x="450" y="348" width="160" height="52" rx="8"
+                fill="#0D1B2A" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5"
+              />
+              <text x="530" y="370" textAnchor="middle"
+                fill="#FFFFFF" fontSize="10" fontFamily="Montserrat, sans-serif" fontWeight="700"
+              >12-Week Nurture</text>
+              <text x="530" y="387" textAnchor="middle"
+                fill="rgba(255,255,255,0.4)" fontSize="8.5" fontFamily="DM Sans, sans-serif"
+              >No leads get lost</text>
+            </g>
+
+            {/* Node: Booked Sales Call */}
+            <g style={{ opacity: s >= 10 ? 1 : 0, transition: "opacity 0.45s ease" }}>
+              <rect x="660" y="170" width="160" height="60" rx="8"
+                fill="#0D1B2A" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5"
+              />
+              <text x="740" y="196" textAnchor="middle"
+                fill="#FFFFFF" fontSize="11" fontFamily="Montserrat, sans-serif" fontWeight="700"
+              >Booked Sales Call</text>
+              <text x="740" y="213" textAnchor="middle"
+                fill="rgba(255,255,255,0.4)" fontSize="9" fontFamily="DM Sans, sans-serif"
+              >Ready to close</text>
+            </g>
+
+            {/* Node: Close the Deal */}
+            <g style={{ opacity: s >= 12 ? 1 : 0, transition: "opacity 0.45s ease" }}>
+              <rect x="860" y="170" width="80" height="60" rx="8"
+                fill="rgba(201,168,76,0.15)" stroke="#C9A84C" strokeWidth="2"
+              />
+              <text x="900" y="196" textAnchor="middle"
+                fill="#C9A84C" fontSize="10" fontFamily="Montserrat, sans-serif" fontWeight="800"
+              >Close the</text>
+              <text x="900" y="212" textAnchor="middle"
+                fill="#C9A84C" fontSize="10" fontFamily="Montserrat, sans-serif" fontWeight="800"
+              >Deal</text>
+            </g>
+
+            {/* ── AI bracket (spans Lead → Booked) ── */}
+            <g style={{ opacity: s >= 13 ? 1 : 0, transition: "opacity 0.6s ease" }}>
+              <path d="M 20 245 L 20 260 L 820 260 L 820 245"
+                fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round"
+              />
+              <text x="420" y="278" textAnchor="middle"
+                fill="#C9A84C" fontSize="13" fontFamily="Montserrat, sans-serif" fontWeight="800" letterSpacing="4"
+              >AI</text>
+            </g>
+
+            {/* ── YOU bracket (spans Close) ── */}
+            <g style={{ opacity: s >= 14 ? 1 : 0, transition: "opacity 0.6s ease" }}>
+              <path d="M 860 245 L 860 260 L 940 260 L 940 245"
+                fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round"
+              />
+              <text x="900" y="278" textAnchor="middle"
+                fill="#C9A84C" fontSize="13" fontFamily="Montserrat, sans-serif" fontWeight="800" letterSpacing="4"
+              >YOU</text>
+            </g>
+          </svg>
         </div>
 
-        {/* ── Mobile: vertical stacked version ── */}
-        <div className="md:hidden space-y-4">
+        {/* Mobile: vertical stacked fallback */}
+        <div className="md:hidden space-y-3 mt-8">
           {[
-            { label: "Lead Comes in Through Meta Ad", sub: "", gold: false, vis: step >= 1 },
-            { label: "Direct Path", sub: "Online Booking + 11 step Lead Nurture sequence", gold: true, vis: step >= 2 },
-            { label: "AI Agent Path", sub: "Booking Process + 7 step Lead Follow up & Nurture sequence", gold: true, vis: step >= 3 },
-            { label: "12 Week Follow-up", sub: "Nurture to keep leads active", gold: false, vis: step >= 6 },
-            { label: "Booked Sales Call", sub: "", gold: false, vis: step >= 5 },
-            { label: "Close the Deal", sub: "", gold: false, vis: step >= 7 },
+            { label: "Lead Comes In", sub: "Through Meta Ad", gold: false, vis: s >= 1 },
+            { label: "Direct", sub: "Online Booking Process", gold: true, vis: s >= 3 },
+            { label: "AI Agent", sub: "Booking Process", gold: true, vis: s >= 4 },
+            { label: "12-Week Nurture", sub: "No leads get lost", gold: false, vis: s >= 8 },
+            { label: "Booked Sales Call", sub: "Ready to close", gold: false, vis: s >= 10 },
+            { label: "Close the Deal", sub: "", gold: true, vis: s >= 12 },
           ].map((n, i) => (
-            <div key={i} style={{ opacity: n.vis ? 1 : 0, transform: n.vis ? "translateY(0)" : "translateY(12px)", transition: "all 0.45s ease" }}>
-              <div style={{ background: n.gold ? "rgba(201,168,76,0.1)" : "#162435", border: `1.5px solid ${n.gold ? "#C9A84C" : "rgba(255,255,255,0.12)"}`, borderRadius: 10, padding: "14px 18px" }}>
+            <div key={i} style={{ opacity: n.vis ? 1 : 0, transform: n.vis ? "translateY(0)" : "translateY(10px)", transition: "all 0.45s ease" }}>
+              <div style={{ background: n.gold ? "rgba(201,168,76,0.1)" : "#0D1B2A", border: `1.5px solid ${n.gold ? "#C9A84C" : "rgba(255,255,255,0.14)"}`, borderRadius: 8, padding: "12px 16px" }}>
                 <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: "0.8rem", color: n.gold ? "#C9A84C" : "#FFFFFF" }}>{n.label}</div>
-                {n.sub && <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", color: "rgba(255,255,255,0.5)", marginTop: 4 }}>{n.sub}</div>}
+                {n.sub && <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: "rgba(255,255,255,0.45)", marginTop: 3 }}>{n.sub}</div>}
               </div>
-              {i < 5 && <div style={{ width: 2, height: 20, background: "rgba(255,255,255,0.2)", margin: "0 auto" }} />}
+              {i < 5 && <div style={{ width: 2, height: 16, background: "rgba(255,255,255,0.15)", margin: "0 auto" }} />}
             </div>
           ))}
-          <div style={{ display: "flex", justifyContent: "space-around", marginTop: 16, opacity: step >= 5 ? 1 : 0, transition: "opacity 0.5s" }}>
-            <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, color: "#C9A84C", fontSize: "1rem", letterSpacing: "0.1em" }}>AI</div>
-            <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, color: "#C9A84C", fontSize: "1rem", letterSpacing: "0.1em" }}>YOU</div>
+          <div style={{ display: "flex", justifyContent: "space-around", marginTop: 20, opacity: s >= 13 ? 1 : 0, transition: "opacity 0.5s" }}>
+            <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, color: "#C9A84C", fontSize: "1rem", letterSpacing: "0.12em" }}>AI</span>
+            <span style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, color: "#C9A84C", fontSize: "1rem", letterSpacing: "0.12em" }}>YOU</span>
           </div>
         </div>
 
@@ -669,7 +837,7 @@ function AcquisitionEngineSection() {
   );
 }
 
-// ── Voice Play Button ────────────────────────────────────────────────────────
+// ── Voice Play Button (used inside LexsonAISection) ─────────────────────────
 function VoicePlayButton() {
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -750,6 +918,7 @@ function VoicePlayButton() {
 }
 
 // ── About / AI Section ────────────────────────────────────────────────────────
+// VoiceAI section is now LexsonAISection above AcquisitionEngineSection
 function AboutSection() {
   return (
     <section id="about" style={{ background: "#0D1B2A" }}>
@@ -1351,6 +1520,7 @@ export default function Home() {
       <ClientLogosSection />
       <ServicesSection />
       <WhyAgencySection />
+      <LexsonAISection />
       <AcquisitionEngineSection />
       <AboutSection />
       <VSLSection />
