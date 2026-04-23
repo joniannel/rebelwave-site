@@ -368,3 +368,11 @@
   animation: fadeInUp 0.7s ease 0.45s forwards;
   opacity: 0;
 }
+
+/* Hide AI/YOU bracket labels in SVG diagram on mobile */
+@media (max-width: 767px) {
+  #ai-bracket,
+  #you-bracket {
+    display: none;
+  }
+}

@@ -488,7 +488,7 @@ function LexsonAISection() {
             }}
           />
 
-          <div className="relative z-10 grid md:grid-cols-2 gap-0 items-stretch">
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-0 items-stretch">
             {/* Left: content */}
             <div className="p-10 md:p-14">
               {/* Partnership badge */}
@@ -562,10 +562,10 @@ function LexsonAISection() {
               </a>
             </div>
 
-            {/* Right: animated pulse visual */}
+            {/* Right: animated pulse visual — visible on all sizes, stacks below on mobile */}
             <div
-              className="hidden md:flex items-center justify-center p-14"
-              style={{ borderLeft: "1px solid rgba(255,255,255,0.06)" }}
+              className="flex items-center justify-center p-10 md:p-14"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
             >
               <VoicePlayButton />
             </div>
@@ -666,9 +666,9 @@ function AcquisitionEngineSection() {
           7. Nurture right (810,400) → right to (840,400) → up to Booked bottom (840,290)  (merges with #5 path)
           8. Booked right (1030,250) → right to Close left (1060,250)  horizontal
         */}
-        <div className="hidden md:block w-full reveal" style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div className="w-full reveal" style={{ maxWidth: 1200, margin: "0 auto", overflowX: "auto" }}>
           <svg
-            viewBox="0 0 1200 600"
+            viewBox="0 0 1200 640"
             preserveAspectRatio="xMidYMid meet"
             style={{ width: "100%", height: "auto", overflow: "visible" }}
           >
@@ -706,17 +706,17 @@ function AcquisitionEngineSection() {
             />
             {s >= 6 && <polygon points="834,290 840,300 846,290" fill="rgba(180,190,200,0.5)" />}
 
-            {/* ─── LINE 6: AI Agent → Nurture (down then right then up) ─── */}
-            <polyline points="385,450 385,475 580,475 580,450"
+            {/* ─── LINE 6: AI Agent → Nurture (down then right) ─── */}
+            <polyline points="385,450 385,530 580,530 580,530"
               fill="none" stroke="rgba(180,190,200,0.45)" strokeWidth="2"
-              style={dash(s >= 7, 370)}
+              style={dash(s >= 7, 380)}
             />
-            {s >= 7 && <polygon points="574,450 580,460 586,450" fill="rgba(180,190,200,0.45)" />}
+            {s >= 7 && <polygon points="574,524 580,534 586,524" fill="rgba(180,190,200,0.45)" />}
 
             {/* ─── LINE 7: Nurture → Booked (right then up) ─── */}
-            <polyline points="810,400 840,400 840,290"
+            <polyline points="810,480 840,480 840,290"
               fill="none" stroke="rgba(180,190,200,0.45)" strokeWidth="2"
-              style={dash(s >= 9, 140)}
+              style={dash(s >= 9, 230)}
             />
 
             {/* ─── LINE 8: Booked → Close ─── */}
@@ -788,18 +788,18 @@ function AcquisitionEngineSection() {
               >sequence</text>
             </g>
 
-            {/* ─── NODE: 12 Week Nurture ─── */}
+            {/* ─── NODE: 12 Week Nurture — placed below AI Agent lines, matching diagram ─── */}
             <g style={nodeAnim(s >= 8)}>
-              <rect x="580" y="350" width="230" height="100" rx="12"
+              <rect x="580" y="430" width="230" height="100" rx="12"
                 fill="#0D1B2A" stroke="rgba(255,255,255,0.22)" strokeWidth="2"
               />
-              <text x="695" y="385" textAnchor="middle"
+              <text x="695" y="465" textAnchor="middle"
                 fill="#FFFFFF" fontSize="12.5" fontFamily="Montserrat,sans-serif" fontWeight="700"
               >12 Week Follow-up and</text>
-              <text x="695" y="404" textAnchor="middle"
+              <text x="695" y="484" textAnchor="middle"
                 fill="#FFFFFF" fontSize="12.5" fontFamily="Montserrat,sans-serif" fontWeight="700"
               >nurture to make sure</text>
-              <text x="695" y="423" textAnchor="middle"
+              <text x="695" y="503" textAnchor="middle"
                 fill="rgba(255,255,255,0.55)" fontSize="11.5" fontFamily="DM Sans,sans-serif"
               >leads stay active</text>
             </g>
@@ -824,30 +824,30 @@ function AcquisitionEngineSection() {
               >Close the deal</text>
             </g>
 
-            {/* ─── AI BRACKET — bottom, open-top U pointing down ─── */}
-            <g style={nodeAnim(s >= 13)}>
-              <path d="M 20 500 L 20 520 L 1030 520 L 1030 500"
+            {/* ─── AI BRACKET — desktop only via CSS ─── */}
+            <g id="ai-bracket" style={nodeAnim(s >= 13)}>
+              <path d="M 20 560 L 20 580 L 1030 580 L 1030 560"
                 fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round"
               />
-              <line x1="525" y1="520" x2="525" y2="548"
+              <line x1="525" y1="580" x2="525" y2="605"
                 stroke="#C9A84C" strokeWidth="2"
               />
-              <polygon points="525,558 519,545 531,545" fill="#C9A84C" />
-              <text x="525" y="578" textAnchor="middle"
+              <polygon points="525,615 519,602 531,602" fill="#C9A84C" />
+              <text x="525" y="632" textAnchor="middle"
                 fill="#C9A84C" fontSize="17" fontFamily="Montserrat,sans-serif" fontWeight="800" letterSpacing="6"
               >AI</text>
             </g>
 
-            {/* ─── YOU BRACKET — bottom, open-top U pointing down ─── */}
-            <g style={nodeAnim(s >= 14)}>
-              <path d="M 1060 500 L 1060 520 L 1190 520 L 1190 500"
+            {/* ─── YOU BRACKET — desktop only via CSS ─── */}
+            <g id="you-bracket" style={nodeAnim(s >= 14)}>
+              <path d="M 1060 560 L 1060 580 L 1190 580 L 1190 560"
                 fill="none" stroke="#C9A84C" strokeWidth="2" strokeLinecap="round"
               />
-              <line x1="1125" y1="520" x2="1125" y2="548"
+              <line x1="1125" y1="580" x2="1125" y2="605"
                 stroke="#C9A84C" strokeWidth="2"
               />
-              <polygon points="1125,558 1119,545 1131,545" fill="#C9A84C" />
-              <text x="1125" y="578" textAnchor="middle"
+              <polygon points="1125,615 1119,602 1131,602" fill="#C9A84C" />
+              <text x="1125" y="632" textAnchor="middle"
                 fill="#C9A84C" fontSize="17" fontFamily="Montserrat,sans-serif" fontWeight="800" letterSpacing="6"
               >YOU</text>
             </g>
