@@ -462,174 +462,207 @@ function WhyAgencySection() {
 }
 
 // ── Other Services ────────────────────────────────────────────────────────────
-function OtherServicesSection() {
-  const services = [
-    {
-      title: "Website & Landing Page Builds",
-      description:
-        "We design and build high-converting websites and landing pages tailored to your offer and audience. Every page is built with one goal: turn visitors into leads.",
-      icon: "🌐",
-      featured: false,
-    },
-    {
-      title: "Sales Funnel Builds",
-      description:
-        "From opt-in to booked appointment, we architect the full funnel — multi-step forms, VSL pages, thank-you flows, and automated follow-up sequences that work while you sleep.",
-      icon: "⚡",
-      featured: false,
-    },
-    {
-      title: "SEO",
-      description:
-        "We build your long-term organic presence with strategic SEO — keyword research, on-page optimization, and content strategy designed to bring you qualified traffic month after month.",
-      icon: "📈",
-      featured: false,
-    },
-  ];
+function AcquisitionEngineSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [started, setStarted] = useState(false);
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setStarted(true); },
+      { threshold: 0.3 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!started) return;
+    // Animate steps sequentially: 0=lead, 1=line to split, 2=direct node, 3=ai node, 4=line to booked, 5=booked, 6=follow-up, 7=close
+    const timings = [0, 600, 1100, 1600, 2400, 2900, 3500, 4200];
+    timings.forEach((t, i) => {
+      setTimeout(() => setStep(i + 1), t);
+    });
+  }, [started]);
+
+  const nodeStyle = (visible: boolean, gold = false): React.CSSProperties => ({
+    background: gold ? "rgba(201,168,76,0.12)" : "#0D1B2A",
+    border: `1.5px solid ${gold ? "#C9A84C" : "rgba(255,255,255,0.18)"}`,
+    borderRadius: "10px",
+    padding: "12px 16px",
+    minWidth: 140,
+    textAlign: "center" as const,
+    opacity: visible ? 1 : 0,
+    transform: visible ? "scale(1)" : "scale(0.85)",
+    transition: "opacity 0.45s ease, transform 0.45s ease",
+    boxShadow: gold ? "0 0 18px rgba(201,168,76,0.18)" : "0 2px 16px rgba(0,0,0,0.25)",
+  });
+
+  const labelStyle: React.CSSProperties = {
+    fontFamily: "'Montserrat', sans-serif",
+    fontWeight: 700,
+    fontSize: "0.72rem",
+    color: "#FFFFFF",
+    lineHeight: 1.4,
+  };
+
+  const subLabelStyle: React.CSSProperties = {
+    fontFamily: "'DM Sans', sans-serif",
+    fontSize: "0.65rem",
+    color: "rgba(255,255,255,0.55)",
+    lineHeight: 1.5,
+    marginTop: 4,
+  };
+
+  const lineStyle = (visible: boolean, horizontal = true): React.CSSProperties => ({
+    background: "rgba(255,255,255,0.25)",
+    ...(horizontal
+      ? { height: 2, width: visible ? "100%" : "0%", transition: "width 0.5s ease" }
+      : { width: 2, height: visible ? "100%" : "0%", transition: "height 0.5s ease" }),
+  });
 
   return (
-    <section style={{ background: "#FFFFFF" }}>
+    <section ref={sectionRef} style={{ background: "#0D1B2A" }}>
       <div className="container py-24">
+        {/* Header */}
         <div className="max-w-xl mb-16 reveal">
-          <p className="section-eyebrow mb-3">More Ways We Help</p>
+          <p className="section-eyebrow mb-3">The System</p>
           <h2
             className="text-3xl md:text-4xl font-bold mb-4"
-            style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332", lineHeight: 1.25 }}
+            style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF", lineHeight: 1.25 }}
           >
-            Beyond Ads — A Full Growth Stack
+            The AI Acquisition Engine
           </h2>
-          <p style={{ color: "#718096", lineHeight: 1.8 }}>
-            We go further than most agencies. Whether you need a better website, a smarter
-            funnel, or the most advanced AI sales technology available — we have you covered.
+          <p style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}>
+            Every lead that enters your pipeline is handled automatically — qualified, nurtured,
+            and booked. You only show up for the sales call.
           </p>
         </div>
 
-        {/* Standard services grid */}
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {services.map((s, i) => (
-            <div
-              key={i}
-              className="p-8 reveal"
-              style={{
-                transitionDelay: `${i * 80}ms`,
-                background: "#F7F8FA",
-                border: "1px solid #E8ECF0",
-              }}
-            >
-              <div className="text-2xl mb-4">{s.icon}</div>
-              <div className="gold-divider mb-4" />
-              <h3
-                className="text-base font-bold mb-3"
-                style={{ fontFamily: "'Montserrat', sans-serif", color: "#1A2332" }}
-              >
-                {s.title}
-              </h3>
-              <p className="text-sm" style={{ color: "#718096", lineHeight: 1.8 }}>
-                {s.description}
-              </p>
-            </div>
-          ))}
-        </div>
+        {/* Diagram — desktop */}
+        <div className="hidden md:block overflow-x-auto pb-4">
+          <div style={{ minWidth: 900, position: "relative", padding: "20px 0 80px" }}>
 
-        {/* AI Voice Agent — Featured Card */}
-        <div
-          id="voice-ai"
-          className="reveal p-0 overflow-hidden"
-          style={{
-            background: "#0D1B2A",
-            border: "1px solid rgba(201,168,76,0.35)",
-            boxShadow: "0 0 60px rgba(201,168,76,0.08), 0 8px 40px rgba(0,0,0,0.3)",
-          }}
-        >
-          <div className="grid md:grid-cols-2">
-            {/* Left: content */}
-            <div className="p-10 md:p-12">
-              <div
-                className="inline-flex items-center gap-2 mb-5 px-3 py-1.5"
-                style={{
-                  background: "rgba(201,168,76,0.12)",
-                  border: "1px solid rgba(201,168,76,0.3)",
-                  borderRadius: "2px",
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#C9A84C" }} />
-                <span
-                  className="text-xs font-semibold tracking-widest uppercase"
-                  style={{ fontFamily: "'Montserrat', sans-serif", color: "#C9A84C" }}
-                >
-                  Partnership with Lexson AI
-                </span>
+            {/* ── Row 1: Lead → split → Direct → Booked → Close ── */}
+            <div style={{ display: "flex", alignItems: "center", gap: 0, marginBottom: 32 }}>
+
+              {/* Node: Lead Comes In */}
+              <div style={nodeStyle(step >= 1)}>
+                <div style={labelStyle}>Lead Comes in<br />Through Meta Ad</div>
               </div>
 
-              <h3
-                className="text-2xl md:text-3xl font-bold mb-4"
-                style={{ fontFamily: "'Montserrat', sans-serif", color: "#FFFFFF", lineHeight: 1.3 }}
-              >
-                AI Voice Agents
-                <br />
-                <span style={{ color: "#C9A84C" }}>Powered by Lexson AI</span>
-              </h3>
+              {/* Line to fork */}
+              <div style={{ flex: "0 0 60px", display: "flex", alignItems: "center" }}>
+                <div style={lineStyle(step >= 2)} />
+              </div>
 
-              <p className="mb-5" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
-                Through our partnership with <strong style={{ color: "#FFFFFF" }}>Lexson AI</strong> —
-                the leading developer of voice AI sales agents — we can deploy intelligent AI agents
-                that call, qualify, and book your leads automatically, 24 hours a day, 7 days a week.
-              </p>
-              <p className="mb-8" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.8 }}>
-                No more missed calls. No more slow follow-up. Your AI agent responds to every
-                new lead within seconds, handles objections naturally, and books qualified
-                appointments directly into your calendar — without any human intervention.
-              </p>
+              {/* Fork column */}
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 0 }}>
 
-              <div className="space-y-3 mb-8">
-                {[
-                  "Responds to leads in under 60 seconds",
-                  "Qualifies prospects using your exact criteria",
-                  "Books appointments directly into your calendar",
-                  "Works 24/7 — nights, weekends, holidays",
-                ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <ChevronRight size={14} className="mt-0.5 flex-shrink-0" style={{ color: "#C9A84C" }} />
-                    <span className="text-sm" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.7 }}>
-                      {item}
-                    </span>
+                {/* Top branch: Direct */}
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {/* Arrow up-right */}
+                  <div style={{ width: 60, height: 2, background: step >= 2 ? "rgba(255,255,255,0.25)" : "transparent", transition: "background 0.4s", marginTop: -40 }} />
+                  <div style={{ ...nodeStyle(step >= 2, true), marginTop: -40 }}>
+                    <div style={{ ...labelStyle, color: "#C9A84C" }}>Direct</div>
+                    <div style={subLabelStyle}>Online Booking process</div>
+                    <div style={{ ...subLabelStyle, color: "rgba(201,168,76,0.8)", marginTop: 6, fontWeight: 600 }}>11 step Lead Nurture<br />sequence</div>
                   </div>
-                ))}
+                </div>
+
+                {/* Spacer */}
+                <div style={{ height: 16 }} />
+
+                {/* Bottom branch: AI Agent */}
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ width: 60, height: 2, background: step >= 3 ? "rgba(255,255,255,0.25)" : "transparent", transition: "background 0.4s", marginTop: 40 }} />
+                  <div style={{ ...nodeStyle(step >= 3, true), marginTop: 40 }}>
+                    <div style={{ ...labelStyle, color: "#C9A84C" }}>AI Agent</div>
+                    <div style={subLabelStyle}>Booking Process</div>
+                    <div style={{ ...subLabelStyle, color: "rgba(201,168,76,0.8)", marginTop: 6, fontWeight: 600 }}>Includes 7 step Lead<br />Follow up and Nurture<br />sequence</div>
+                  </div>
+                </div>
               </div>
 
-              <a href="#book" className="btn-gold">
-                <span>Ask About AI Voice Agents</span>
-                <ArrowRight size={15} />
-              </a>
+              {/* Converging lines to Booked */}
+              <div style={{ flex: "0 0 80px", display: "flex", alignItems: "center" }}>
+                <div style={lineStyle(step >= 4)} />
+              </div>
+
+              {/* Node: Booked Sales Call */}
+              <div style={nodeStyle(step >= 5)}>
+                <div style={labelStyle}>Booked Sales Call</div>
+              </div>
+
+              {/* Line to Close */}
+              <div style={{ flex: "0 0 60px", display: "flex", alignItems: "center" }}>
+                <div style={lineStyle(step >= 7)} />
+              </div>
+
+              {/* Node: Close the Deal */}
+              <div style={nodeStyle(step >= 8 || step >= 7)}>
+                <div style={labelStyle}>Close the Deal</div>
+              </div>
             </div>
 
-              {/* Right: visual — mic button plays voice clip when uploaded */}
-            <div
-              className="relative flex items-center justify-center p-12"
-              style={{ background: "rgba(201,168,76,0.04)", borderLeft: "1px solid rgba(201,168,76,0.12)" }}
-            >
-              {/* Animated pulse rings */}
-              <VoicePlayButton />
-
-              {/* Floating label */}
-              <div
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center"
-              >
-                <div
-                  className="px-4 py-2 text-xs font-semibold tracking-wider uppercase"
-                  style={{
-                    fontFamily: "'Montserrat', sans-serif",
-                    color: "#C9A84C",
-                    border: "1px solid rgba(201,168,76,0.25)",
-                    background: "rgba(201,168,76,0.06)",
-                    borderRadius: "2px",
-                  }}
-                >
-                  We integrate the Agent directly into your campaigns
+            {/* ── Row 2: 12-week follow-up loop ── */}
+            <div style={{ display: "flex", alignItems: "flex-start", paddingLeft: 340, marginTop: -20 }}>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0 }}>
+                <div style={{ height: 40, width: 2, background: step >= 6 ? "rgba(255,255,255,0.25)" : "transparent", transition: "background 0.5s" }} />
+                <div style={{ ...nodeStyle(step >= 6), maxWidth: 180 }}>
+                  <div style={subLabelStyle}>12 Week Follow-up and nurture to make sure leads stay active</div>
                 </div>
+                {/* Arrow back up to Booked */}
+                <div style={{ height: 24, width: 2, background: step >= 6 ? "rgba(255,255,255,0.25)" : "transparent", transition: "background 0.5s" }} />
+              </div>
+            </div>
+
+            {/* ── AI / YOU labels ── */}
+            <div style={{ display: "flex", marginTop: 32, gap: 0 }}>
+              {/* AI bracket */}
+              <div style={{ flex: "0 0 72%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ width: "90%", height: 2, borderBottom: "2px solid #C9A84C", borderLeft: "2px solid #C9A84C", borderRight: "2px solid #C9A84C", borderRadius: "0 0 6px 6px", marginBottom: 8, opacity: step >= 4 ? 1 : 0, transition: "opacity 0.5s" }} />
+                <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#C9A84C", letterSpacing: "0.1em", opacity: step >= 4 ? 1 : 0, transition: "opacity 0.5s" }}>AI</div>
+              </div>
+              {/* YOU bracket */}
+              <div style={{ flex: "0 0 28%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ width: "80%", height: 2, borderBottom: "2px solid #C9A84C", borderLeft: "2px solid #C9A84C", borderRight: "2px solid #C9A84C", borderRadius: "0 0 6px 6px", marginBottom: 8, opacity: step >= 7 ? 1 : 0, transition: "opacity 0.5s" }} />
+                <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "#C9A84C", letterSpacing: "0.1em", opacity: step >= 7 ? 1 : 0, transition: "opacity 0.5s" }}>YOU</div>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* ── Mobile: vertical stacked version ── */}
+        <div className="md:hidden space-y-4">
+          {[
+            { label: "Lead Comes in Through Meta Ad", sub: "", gold: false, vis: step >= 1 },
+            { label: "Direct Path", sub: "Online Booking + 11 step Lead Nurture sequence", gold: true, vis: step >= 2 },
+            { label: "AI Agent Path", sub: "Booking Process + 7 step Lead Follow up & Nurture sequence", gold: true, vis: step >= 3 },
+            { label: "12 Week Follow-up", sub: "Nurture to keep leads active", gold: false, vis: step >= 6 },
+            { label: "Booked Sales Call", sub: "", gold: false, vis: step >= 5 },
+            { label: "Close the Deal", sub: "", gold: false, vis: step >= 7 },
+          ].map((n, i) => (
+            <div key={i} style={{ opacity: n.vis ? 1 : 0, transform: n.vis ? "translateY(0)" : "translateY(12px)", transition: "all 0.45s ease" }}>
+              <div style={{ background: n.gold ? "rgba(201,168,76,0.1)" : "#162435", border: `1.5px solid ${n.gold ? "#C9A84C" : "rgba(255,255,255,0.12)"}`, borderRadius: 10, padding: "14px 18px" }}>
+                <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: "0.8rem", color: n.gold ? "#C9A84C" : "#FFFFFF" }}>{n.label}</div>
+                {n.sub && <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", color: "rgba(255,255,255,0.5)", marginTop: 4 }}>{n.sub}</div>}
+              </div>
+              {i < 5 && <div style={{ width: 2, height: 20, background: "rgba(255,255,255,0.2)", margin: "0 auto" }} />}
+            </div>
+          ))}
+          <div style={{ display: "flex", justifyContent: "space-around", marginTop: 16, opacity: step >= 5 ? 1 : 0, transition: "opacity 0.5s" }}>
+            <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, color: "#C9A84C", fontSize: "1rem", letterSpacing: "0.1em" }}>AI</div>
+            <div style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, color: "#C9A84C", fontSize: "1rem", letterSpacing: "0.1em" }}>YOU</div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-16 text-center reveal">
+          <a href="#book" className="btn-gold">
+            <span>See How It Works for Your Business</span>
+            <ArrowRight size={15} />
+          </a>
         </div>
       </div>
     </section>
@@ -1318,7 +1351,7 @@ export default function Home() {
       <ClientLogosSection />
       <ServicesSection />
       <WhyAgencySection />
-      <OtherServicesSection />
+      <AcquisitionEngineSection />
       <AboutSection />
       <VSLSection />
       <CaseStudiesSection />
