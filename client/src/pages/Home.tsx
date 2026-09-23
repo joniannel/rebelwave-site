@@ -93,6 +93,14 @@ function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
+          <Link
+            href="/content-production"
+            className="px-3.5 py-2 rounded border border-blue-400/40 bg-blue-500/10 text-blue-200 hover:bg-blue-600 hover:text-white transition-all text-xs font-semibold flex items-center gap-1.5"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+          >
+            <span>Content Production</span>
+            <ChevronRight size={14} />
+          </Link>
           <a href="#book" className="btn-gold text-sm py-2.5 px-5">
             Book a Free Call
           </a>
@@ -116,6 +124,14 @@ function Navbar() {
               {link.label}
             </a>
           ))}
+          <Link
+            href="/content-production"
+            className="block py-3 text-xs font-semibold text-blue-300 border-b border-white/10"
+            style={{ fontFamily: "'Montserrat', sans-serif" }}
+            onClick={() => setMenuOpen(false)}
+          >
+            Switch to Content Production →
+          </Link>
           <a href="#book" className="btn-gold mt-5 w-full text-center text-sm py-3">
             Book a Free Call
           </a>

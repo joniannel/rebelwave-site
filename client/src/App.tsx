@@ -6,32 +6,35 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import BookingPage from "./pages/BookingPage";
-
+import EntryGateway from "./pages/EntryGateway";
+import ContentProductionPage from "./pages/ContentProductionPage";
 
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/book"} component={BookingPage} />
-      <Route path={"/404"} component={NotFound} />
-      {/* Final fallback route */}
+      {/* Forced gateway choice on initial domain entry */}
+      <Route path="/" component={EntryGateway} />
+
+      {/* Track 1: Advertising & Lead Generation (existing full site) */}
+      <Route path="/advertising" component={Home} />
+
+      {/* Track 2: Content Production (dedicated creative site) */}
+      <Route path="/content-production" component={ContentProductionPage} />
+
+      {/* Shared booking experience */}
+      <Route path="/book" component={BookingPage} />
+
+      {/* 404 & fallback */}
+      <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-// NOTE: About Theme
-// - First choose a default theme according to your design style (dark or light bg), than change color palette in index.css
-//   to keep consistent foreground/background color across components
-// - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
-
 function App() {
   return (
     <ErrorBoundary>
-      <ThemeProvider
-        defaultTheme="dark"
-        // switchable
-      >
+      <ThemeProvider defaultTheme="dark">
         <TooltipProvider>
           <Toaster />
           <Router />
