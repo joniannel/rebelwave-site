@@ -42,16 +42,10 @@ export default function EntryGateway() {
 
       {/* Main Choice Hub */}
       <main className="relative z-10 container py-10 md:py-14 my-auto">
-        <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
-          <p className="text-xs md:text-sm uppercase tracking-[0.22em] text-[#C9A84C] font-semibold mb-3">
-            Choose Your Growth Objective
-          </p>
+        <div className="text-center max-w-2xl mx-auto mb-7 md:mb-9">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-['Montserrat',sans-serif] tracking-tight leading-tight">
             Select Your RebelWAVE Experience
           </h1>
-          <p className="text-sm md:text-base text-white/60 mt-3 max-w-xl mx-auto font-['DM_Sans',sans-serif]">
-            Whether you need scalable customer acquisition funnels or high-impact content production, choose your path below. You can switch between experiences anytime.
-          </p>
         </div>
 
         {/* Two Doors */}
@@ -77,15 +71,11 @@ export default function EntryGateway() {
                 </span>
               </div>
 
-              <h2 className="text-2xl md:text-3xl font-bold font-['Montserrat',sans-serif] text-white group-hover:text-[#F3D78A] transition-colors mb-3">
+              <h2 className="text-2xl md:text-3xl font-bold font-['Montserrat',sans-serif] text-white group-hover:text-[#F3D78A] transition-colors mb-6">
                 Advertising & Lead Gen
               </h2>
 
-              <p className="text-sm md:text-[15px] text-white/70 leading-relaxed font-['DM_Sans',sans-serif] mb-6">
-                Full-funnel customer acquisition for service-based businesses. End-to-end ad creation, high-converting pipelines, 24/7 AI voice lead qualification, and sales optimization.
-              </p>
-
-              <div className="space-y-2.5 pt-4 border-t border-white/10 mb-8 text-xs md:text-sm text-white/80">
+              <div className="space-y-2.5 mb-8 text-xs md:text-sm text-white/80">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#C9A84C] flex-shrink-0" />
                   <span>Meta advertising with AI-powered audience testing</span>
@@ -131,15 +121,11 @@ export default function EntryGateway() {
                 </span>
               </div>
 
-              <h2 className="text-2xl md:text-3xl font-bold font-['Montserrat',sans-serif] text-white group-hover:text-blue-200 transition-colors mb-3">
+              <h2 className="text-2xl md:text-3xl font-bold font-['Montserrat',sans-serif] text-white group-hover:text-blue-200 transition-colors mb-6">
                 Content Production
               </h2>
 
-              <p className="text-sm md:text-[15px] text-white/70 leading-relaxed font-['DM_Sans',sans-serif] mb-6">
-                Turn attention into business value. Strategic video assets, commercial reels, podcasts, creative direction, and high-retention formats built to capture and hold your market’s focus.
-              </p>
-
-              <div className="space-y-2.5 pt-4 border-t border-white/10 mb-8 text-xs md:text-sm text-white/80">
+              <div className="space-y-2.5 mb-8 text-xs md:text-sm text-white/80">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" />
                   <span>Short-form & long-form video production</span>
