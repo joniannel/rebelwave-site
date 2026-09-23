@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import BookingPage from "./pages/BookingPage";
 import EntryGateway from "./pages/EntryGateway";
 import ContentProductionPage from "./pages/ContentProductionPage";
+import ContentStudioConcepts from "./pages/ContentStudioConcepts";
 
 function Router() {
   return (
@@ -20,6 +21,9 @@ function Router() {
 
       {/* Track 2: Content Production (dedicated creative site) */}
       <Route path="/content-production" component={ContentProductionPage} />
+
+      {/* Private visual direction board for Content Studio review */}
+      <Route path="/content-studio-concepts" component={ContentStudioConcepts} />
 
       {/* Shared booking experience */}
       <Route path="/book" component={BookingPage} />
